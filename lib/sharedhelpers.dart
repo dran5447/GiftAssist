@@ -60,11 +60,12 @@ class Helpers{
 
     Duration difference = today.difference(date);
 
-    if (difference.inDays > -1 &&  difference.inHours < -24) {
+    //TODO this may still be iffy..need to verify hours/days logic
+    if (difference.inDays == 0 &&  difference.inHours < -24) {
       return "Today";
-    } else if (difference.inDays > -1) {
+    } else if (difference.inDays > 0) {
       return "Past";
-    } else if (difference.inDays > -2 && difference.inHours < -24) {
+    } else if (difference.inDays < -2 && difference.inHours >= -48) {
       return "Tomorrow";
     } else if (difference.inDays > -7) {
       switch (date.weekday) {

@@ -38,7 +38,7 @@ class _HomeState extends State<HomePage>{
   final List<Event> events = List<Event>.generate(
     15,
     (i) => Event(
-      new DateTime(2018, random.nextInt(12), random.nextInt(31)),//.now(),
+      new DateTime(2018, 12, random.nextInt(31)),//.now(),
           'title $i',
           'A description for $i',
         ),
