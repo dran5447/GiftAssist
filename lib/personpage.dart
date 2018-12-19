@@ -29,7 +29,7 @@ class _IdeasState extends State<PersonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gift Assist for ' + widget.personName),
+        title: Text('Gift Assist - ' + widget.personName),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -54,8 +54,18 @@ class _IdeasState extends State<PersonPage> {
               ],
             ),
           ),
+          Text(
+            'Events',
+            style: Theme.of(context).textTheme.subhead,
+          ),
+
           //TODO add key dates section here
+
           Divider(),
+          Text(
+            'Gift Ideas',
+            style: Theme.of(context).textTheme.subhead,
+          ),
           new Expanded(
             child: ListView.builder(
               itemCount: todos.length,
