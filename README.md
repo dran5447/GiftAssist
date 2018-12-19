@@ -3,11 +3,13 @@
 Flutter project for tracking gift ideas
 
 
-##TODOs
+## TODOs
 
 - auth
 - connect to user storage places to persist data
 - pull actual data
 - animations/effects
 - alerts 
+- export/email
+- wish list & sharing capability
 - etc

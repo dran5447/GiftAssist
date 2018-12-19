@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'addgiftideapage.dart';
 import 'objectmodel.dart';
+import 'sharedhelpers.dart';
 
 
 class PersonPage extends StatefulWidget {
@@ -41,8 +42,8 @@ class _IdeasState extends State<PersonPage> {
                 Padding(
                   padding: EdgeInsets.only(right: 30.0),
                   child: CircleAvatar(
-                    backgroundColor: Colors.tealAccent.shade700,
-                    child: Text(getInitials(widget.personName)),
+                    backgroundColor: Theme.of(context).unselectedWidgetColor,
+                    child: Text(Helpers.getInitials(widget.personName)),
                     minRadius: 50,
                   ),
                 ),
@@ -54,17 +55,23 @@ class _IdeasState extends State<PersonPage> {
               ],
             ),
           ),
-          Text(
-            'Events',
-            style: Theme.of(context).textTheme.subhead,
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text(
+              'Events',
+              style: Theme.of(context).textTheme.headline,
+            ),
           ),
 
           //TODO add key dates section here
 
           Divider(),
-          Text(
-            'Gift Ideas',
-            style: Theme.of(context).textTheme.subhead,
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 10),
+            child: Text(
+              'Gift Ideas',
+              style: Theme.of(context).textTheme.headline,
+            ),
           ),
           new Expanded(
             child: ListView.builder(
@@ -87,14 +94,5 @@ class _IdeasState extends State<PersonPage> {
         ]
       ),
     );
-  }
-
-  String getInitials(String name){
-    var nameList = name.split(" ");
-    String initials = '';
-    nameList.forEach(
-      (element) => initials+=element.substring(0,1)
-    );
-    return initials;
   }
 }

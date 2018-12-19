@@ -12,14 +12,55 @@ class AddGiftIdeaScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Text(
-            'Add Gift Idea for ___PERSON____',
-            style: Theme.of(context).textTheme.title,
+            'New Gift Idea',
+            style: Theme.of(context).textTheme.headline,
           ),
-          RaisedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Go back!'),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                onPressed: () {
+                  //Confirm changes lost
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      child: new SimpleDialog(
+                        title: new Column(
+                          children: <Widget>[
+                            new Text("GridView"),
+                            new Icon(
+                              Icons.favorite,
+                              color: Colors.green,
+                            ),
+                          ],
+                        ),
+                        children: <Widget>[
+                            SimpleDialogOption(
+                              onPressed: () 
+                              {  
+                                //TODO navigate away
+                                //Navigator.pop(context, Department.treasury); 
+                              },
+                              child: const Text('Confirm'),
+                            ),
+                            SimpleDialogOption(
+                              onPressed: () { Navigator.pop(context); },
+                              child: const Text('Cancel'),
+                            ),
+                          ],
+                      ),
+                    );
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel'),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Create'),
+              ),
+            ],
           ),
         ],
       ),

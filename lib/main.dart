@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'personpage.dart';
 import 'addgiftideapage.dart';
 import 'objectmodel.dart';
+import 'sharedhelpers.dart';
 
+import 'dart:math';
 
 void main() => runApp(MyApp());
 
@@ -12,8 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gift Assist',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-        accentColor: Colors.tealAccent
+        primarySwatch: Colors.indigo,
+        primaryColor: Colors.indigo.shade900,
+        unselectedWidgetColor: Colors.grey.shade200,
+        accentColor: Colors.pinkAccent.shade200,   //or cyanAccent.shade400 //TODO add option
       ),
       home: HomePage(title: 'Gift Assist'),
     );
@@ -30,10 +34,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage>{
+  static Random random = new Random();
   final List<Event> events = List<Event>.generate(
     15,
     (i) => Event(
-      new DateTime.now(),
+      new DateTime(2018, random.nextInt(12), random.nextInt(31)),//.now(),
           'title $i',
           'A description for $i',
         ),
@@ -61,15 +66,6 @@ class _HomeState extends State<HomePage>{
         ),
   );
 
-  String getInitials(String name){
-    var nameList = name.split(" ");
-    String initials = '';
-    nameList.forEach(
-      (element) => initials+=element.substring(0,1)
-    );
-    return initials;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,12 +74,20 @@ class _HomeState extends State<HomePage>{
       ),
       body: Column(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text
+            (
+              'Upcoming Events',
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ),
           new Expanded(
             child: ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Text(events[index].date.toString()),
+                  leading: Text(Helpers.informalDate(events[index].date) + ":" + Helpers.simplifyDate(events[index].date)),
                   title: Text(events[index].title),
                   onTap: () { /* react to the tile being tapped */ },
                 );
@@ -91,6 +95,14 @@ class _HomeState extends State<HomePage>{
             ),
           ),
           Divider(),
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 10),
+            child: Text
+            (
+              'People',
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ),
           new Expanded(
             child: GridView.builder(
               itemCount: people.length,
@@ -105,8 +117,8 @@ class _HomeState extends State<HomePage>{
                         Padding(
                           padding: EdgeInsets.only(bottom: 30.0),
                           child: CircleAvatar(
-                            backgroundColor: Colors.tealAccent.shade700,
-                            child: Text(getInitials(people[index].name)),
+                            backgroundColor: Theme.of(context).unselectedWidgetColor,
+                            child: Text(Helpers.getInitials(people[index].name)),
                             minRadius: 50,
                           ),
                         ),
@@ -123,36 +135,6 @@ class _HomeState extends State<HomePage>{
                       context,
                       MaterialPageRoute(builder: (context) => PersonPage(personName: people[index].name,)),
                     );
-
-                    // showDialog(
-                    //   barrierDismissible: false,
-                    //   context: context,
-                    //   child: new SimpleDialog(
-                    //     title: new Column(
-                    //       children: <Widget>[
-                    //         new Text("GridView"),
-                    //         new Icon(
-                    //           Icons.favorite,
-                    //           color: Colors.green,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     children: <Widget>[
-                    //         SimpleDialogOption(
-                    //           onPressed: () 
-                    //           {  
-                    //             //TODO navigate away
-                    //             //Navigator.pop(context, Department.treasury); 
-                    //           },
-                    //           child: const Text('Confirm'),
-                    //         ),
-                    //         SimpleDialogOption(
-                    //           onPressed: () { Navigator.pop(context); },
-                    //           child: const Text('Cancel'),
-                    //         ),
-                    //       ],
-                    //   ),
-                    // );
                   },
                 );
               },
