@@ -6,28 +6,35 @@ import 'sharedhelpers.dart';
 
 import 'dart:math';
 
-void main() => runApp(MyApp());
+//void main() => runApp(MyApp());
+
+void main() {
+  runApp(MaterialApp(
+  //  title: 'Gift Assist',
+    theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        primaryColor: Colors.indigo.shade900,
+        unselectedWidgetColor: Colors.grey.shade200,
+        accentColor: Colors.cyanAccent.shade400, // or Colors.pinkAccent.shade200, //TODO add option
+      ),
+    home: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Gift Assist',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        primaryColor: Colors.indigo.shade900,
-        unselectedWidgetColor: Colors.grey.shade200,
-        accentColor: Colors.pinkAccent.shade200,   //or cyanAccent.shade400 //TODO add option
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gift Assist'),
       ),
-      home: HomePage(title: 'Gift Assist'),
+      body: HomePage(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  final String title;
-  
-  HomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {   
+  HomePage({Key key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -69,9 +76,6 @@ class _HomeState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Column(
         children: <Widget>[
           Padding(
@@ -144,14 +148,27 @@ class _HomeState extends State<HomePage>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddGiftIdeaScreen()),
-          );
+          navigateToAddAndReturnResult(context);
         },
         tooltip: 'Quick Add Gift Idea',
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  navigateToAddAndReturnResult(BuildContext context) async{
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the following screen to feedback success or failure
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddGiftIdeaScreen()),
+    );
+
+    if (result != null){
+      // After result returned hide any previous snackbars and show result
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
+    }
+    
   }
 }

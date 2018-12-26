@@ -17,26 +17,47 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
       key: _formKey,
       child: Column(
         children: <Widget>[
+          //TODO optional picture for idea
+          //Name
           TextFormField(
             decoration: const InputDecoration(
-            icon: Icon(Icons.card_giftcard),
-            hintText: 'What is your gift idea?',
-            labelText: 'Idea *',
+              icon: Icon(Icons.card_giftcard),
+              hintText: 'What is your gift idea?',
+              labelText: 'Idea *',
+            ),
+            validator:  (value){
+              if(value.isEmpty){
+                return 'Please enter a value';
+              }
+            },
           ),
-          //TODO  autocorrect: ,
-          validator:  (value){
-            //TODO add other validation
-            if(value.isEmpty){
-              return 'Please enter a value';
-            }
-          },
-        ),
-
-        ButtonBar(
-          alignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              onPressed: () {
+          //Optional website
+          TextFormField(
+            decoration: const InputDecoration(
+              icon: Icon(Icons.public),
+              hintText: 'URL for the gift idea',
+              labelText: 'Website',
+            ),
+            validator:  (value){
+              if(value.isNotEmpty){
+                var httpPrefixRegex = new RegExp('^http(s)?\\:\\/\\/(www\\.)?([^\\ ]*)\$');
+                var wwwPrefixRegex = new RegExp('^www\\.([^\\ ]*)\$');
+                //Accept formats of type http:// , https:// , and www. 
+                //TODO consider appending http:// for data persistance
+                if(!value.startsWith(httpPrefixRegex)) {
+                  if(!value.startsWith(wwwPrefixRegex)){
+                    return 'Invalid format.';
+                  }
+                }
+              }
+            },
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                child: Text('Cancel'),
+                onPressed: () {
                   //Confirm changes lost
                   showDialog(
                     barrierDismissible: false,
@@ -73,26 +94,22 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                       );
                     }
                   );
-              },
-              child: Text('Cancel'),
-            ),
-            RaisedButton(
-              onPressed: () {
-                if(_formKey.currentState.validate()){
-                   //TODO persist data
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("VALID"),
-                      );});
-                }
-                //if invalid, form validation will show error messages
-              },
-              child: Text('Create'),
-            ),
-          ],
-        ),
+                },
+              ),
+              RaisedButton(
+                child: Text('Create'),
+                onPressed: () {
+                  if(_formKey.currentState.validate()){
+                    //TODO persist data
+
+                    //Navigate back with message to display status
+                    Navigator.pop(context, 'Saved.');
+                  }
+                  //if invalid, form validation will show error messages
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );
