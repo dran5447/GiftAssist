@@ -23,7 +23,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
             decoration: const InputDecoration(
               icon: Icon(Icons.card_giftcard),
               hintText: 'What is your gift idea?',
-              labelText: 'Idea *',
+              labelText: 'Idea Name *',
             ),
             validator:  (value){
               if(value.isEmpty){
@@ -52,6 +52,8 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               }
             },
           ),
+       //   DropdownButtonFormField(items: ,decoration: ,)
+
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[

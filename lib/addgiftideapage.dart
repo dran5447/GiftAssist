@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'objectmodel.dart';
 import 'giftideaform.dart';
 
 
@@ -8,15 +7,20 @@ class AddGiftIdeaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Screen"),
+        title: Text('New Gift Idea'),
       ),
       body: Column(
         children: <Widget>[
-          Text(
-            'New Gift Idea',
-            style: Theme.of(context).textTheme.headline,
-          ),      
-          GiftIdeaForm()
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 10),
+            child: Text(
+              "Let's get some details about your new gift idea!",
+            ),
+          ),    
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: GiftIdeaForm()
+          ),
         ],
       ),
     );

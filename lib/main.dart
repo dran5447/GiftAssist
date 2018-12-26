@@ -6,27 +6,32 @@ import 'sharedhelpers.dart';
 
 import 'dart:math';
 
-//void main() => runApp(MyApp());
-
 void main() {
   runApp(MaterialApp(
-  //  title: 'Gift Assist',
     theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        primaryColor: Colors.indigo.shade900,
+        primarySwatch: Colors.grey,
+        primaryColor: Color.fromARGB(255, 126, 71, 98),
+      //  primaryColor: Color.fromARGB(255, 83, 116, 127),
         unselectedWidgetColor: Colors.grey.shade200,
-        accentColor: Colors.cyanAccent.shade400, // or Colors.pinkAccent.shade200, //TODO add option
+        accentColor: Color.fromARGB(255, 126, 71, 98),
       ),
-    home: MyApp(),
+      home: MyApp(),
   ));
 }
+
+//color scheme:
+//burgundy - 7E4762
+//grey - 272326
+//dark teal -53747F
+//light teal -B1C5BC
+//old paper -F9F6E4
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gift Assist'),
+        title: Text('Home'),
       ),
       body: HomePage(),
     );
@@ -93,7 +98,7 @@ class _HomeState extends State<HomePage>{
                 return ListTile(
                   leading: Text(Helpers.informalDate(events[index].date) + ":" + Helpers.simplifyDate(events[index].date)),
                   title: Text(events[index].title),
-                  onTap: () { /* react to the tile being tapped */ },
+                  onTap: () { /* TODO react to the tile being tapped */ },
                 );
               },
             ),
@@ -119,17 +124,17 @@ class _HomeState extends State<HomePage>{
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(bottom: 30.0),
+                          padding: EdgeInsets.only(bottom: 10.0),
                           child: CircleAvatar(
                             backgroundColor: Theme.of(context).unselectedWidgetColor,
                             child: Text(Helpers.getInitials(people[index].name)),
-                            minRadius: 50,
+                            minRadius: 60,
                           ),
                         ),
                         Text
                         (
                           people[index].name,
-                          style: Theme.of(context).textTheme.headline,
+                          style: Theme.of(context).textTheme.subtitle,
                         ),
                       ],
                     ),
