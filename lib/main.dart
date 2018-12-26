@@ -14,6 +14,7 @@ void main() {
       //  primaryColor: Color.fromARGB(255, 83, 116, 127),
         unselectedWidgetColor: Colors.grey.shade200,
         accentColor: Color.fromARGB(255, 126, 71, 98),
+        bottomAppBarColor: Color.fromARGB(255, 0, 0, 0)
       ),
       home: MyApp(),
   ));
@@ -46,6 +47,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage>{
+  int _selectedIndex = 0;
+  final List<Widget> _children = [];
+
   static Random random = new Random();
   final List<Event> events = List<Event>.generate(
     15,
@@ -158,8 +162,82 @@ class _HomeState extends State<HomePage>{
         tooltip: 'Quick Add Gift Idea',
         child: Icon(Icons.add),
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+       items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Color.fromARGB(255, 126, 71, 98),), 
+            title: Text(
+              'Home',
+              style: new TextStyle(
+                color: Color.fromARGB(255, 126, 71, 98),
+              ),
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today, color: Color.fromARGB(255, 126, 71, 98),),
+            title: Text(
+              'Events',
+              style: new TextStyle(
+                color: Color.fromARGB(255, 126, 71, 98),
+              ),
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Color.fromARGB(255, 126, 71, 98),),
+            title: Text(
+              'People',
+              style: new TextStyle(
+                color: Color.fromARGB(255, 126, 71, 98),
+              ),
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications, color: Color.fromARGB(255, 126, 71, 98),),
+            title: Text(
+              'Notifications',
+              style: new TextStyle(
+                color: Color.fromARGB(255, 126, 71, 98),
+              ),
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings, color: Color.fromARGB(255, 126, 71, 98),),
+            title: Text(
+              'Settings',
+              style: new TextStyle(
+                color: Color.fromARGB(255, 126, 71, 98),
+              ),
+            )
+          ),
+       ],
+       currentIndex: _selectedIndex,
+       onTap: _onItemTapped,
+     ),
     );
   }
+
+  // actions: <Widget>[
+  //         IconButton(
+  //             icon: Icon(Icons.settings),
+  //             onPressed: () {
+  //               //TODO settings page
+  //               showDialog(
+  //                 context: context, 
+  //                 builder: (BuildContext context) {
+  //                   return AlertDialog(
+  //                     content: Text("settings clicked"));
+  //                 }
+  //               );
+  //             },
+  //           ),
+  //       ],
+
+  void _onItemTapped(int index) {
+   setState(() {
+     _selectedIndex = index;
+   });
+ }
 
   navigateToAddAndReturnResult(BuildContext context) async{
     // Navigator.push returns a Future that will complete after we call
