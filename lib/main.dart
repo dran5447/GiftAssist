@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'addgiftideapage.dart';
 import 'mainpages/people.dart';
 import 'mainpages/home.dart';
 import 'mainpages/events.dart';
 import 'mainpages/notifications.dart';
 import 'mainpages/settings.dart';
+import 'sharedhelpers.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -19,10 +19,10 @@ void main() {
   ));
 }
 //color scheme:
-  //burgundy - 7E4762
-  //grey - 272326
-  //dark teal -53747F
-  //light teal -B1C5BC
+  //burgundy - Color.fromARGB(255, 126, 71, 98),
+  //grey - Color.fromARGB(255, 76, 66, 74),
+  //dark teal - Color.fromARGB(255, 83, 116, 127),
+  //light teal - Color.fromARGB(255, 177, 197, 188),
   //old paper -F9F6E4
 
 class MyApp extends StatelessWidget {
@@ -58,8 +58,8 @@ class _HomeState extends State<HomePage>{
       body: _children[_selectedIndex], 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          navigateToAddAndReturnResult(context);
-        },
+          Helpers.NavigateToAddAndReturnResult(context);
+        }, backgroundColor: Color.fromARGB(255, 76, 66, 74),
         tooltip: 'Quick Add Gift Idea',
         child: Icon(Icons.add),
       ),
@@ -123,20 +123,4 @@ class _HomeState extends State<HomePage>{
      _selectedIndex = index;
    });
  }
-
-  navigateToAddAndReturnResult(BuildContext context) async{
-    // Navigator.push returns a Future that will complete after we call
-    // Navigator.pop on the following screen to feedback success or failure
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddGiftIdeaScreen()),
-    );
-
-    if (result != null){
-      // After result returned hide any previous snackbars and show result
-      Scaffold.of(context).removeCurrentSnackBar();
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
-    }
-    
-  }
 }

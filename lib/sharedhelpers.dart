@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 import 'objectmodel.dart';
+import 'addgiftideapage.dart';
+import 'package:flutter/material.dart';
 
 class Helpers{
 
@@ -40,6 +42,22 @@ class Helpers{
   }
 
   // END TEMP HELPERS
+
+  static NavigateToAddAndReturnResult(BuildContext context) async{
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the following screen to feedback success or failure
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddGiftIdeaScreen()),
+    );
+
+    if (result != null){
+      // After result returned hide any previous snackbars and show result
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
+    }
+    
+  }
 
   static List<Event> filterPastEvents(List<Event> events){
     List<Event> updated = new List<Event>();

@@ -23,6 +23,9 @@ dependencies:
   # Date formatting
   intl: ^0.15.7
 
+  # Advanced floating action button menu (speed dial)
+  flutter_speed_dial: ^1.0.9
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
