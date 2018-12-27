@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'personpage.dart';
 import 'addgiftideapage.dart';
 import 'objectmodel.dart';
-import 'sharedhelpers.dart';
-
-import 'dart:math';
+import 'mainpages/people.dart';
+import 'mainpages/home.dart';
+import 'mainpages/events.dart';
+import 'mainpages/notifications.dart';
+import 'mainpages/settings.dart';
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
         primarySwatch: Colors.grey,
         primaryColor: Color.fromARGB(255, 126, 71, 98),
-      //  primaryColor: Color.fromARGB(255, 83, 116, 127),
         unselectedWidgetColor: Colors.grey.shade200,
         accentColor: Color.fromARGB(255, 126, 71, 98),
         bottomAppBarColor: Color.fromARGB(255, 0, 0, 0)
@@ -19,21 +19,20 @@ void main() {
       home: MyApp(),
   ));
 }
-
 //color scheme:
-//burgundy - 7E4762
-//grey - 272326
-//dark teal -53747F
-//light teal -B1C5BC
-//old paper -F9F6E4
+  //burgundy - 7E4762
+  //grey - 272326
+  //dark teal -53747F
+  //light teal -B1C5BC
+  //old paper -F9F6E4
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Home'),
+      // ),
       body: HomePage(),
     );
   }
@@ -48,113 +47,19 @@ class HomePage extends StatefulWidget {
 
 class _HomeState extends State<HomePage>{
   int _selectedIndex = 0;
-  final List<Widget> _children = [];
+  final List<Widget> _children = [
+    HomeWidget(),
+    EventWidget(),
+    PeopleWidget(),
+    NotificationWidget(),
+    SettingsWidget(),
+  ];
 
-  static Random random = new Random();
-  final List<Event> events = List<Event>.generate(
-    15,
-    (i) => Event(
-      new DateTime(2018, 12, random.nextInt(31)),//.now(),
-          'title $i',
-          'A description for $i',
-        ),
-  );
-
-  final List<Person> people = List<Person>.generate(
-    20,
-    (i) => Person(
-          'Person $i',
-          new List<Event>.generate(
-            5,
-            (i) => Event(
-              new DateTime.now(),
-                  'title $i',
-                  'A description for $i',
-                ),
-          ),
-          List<Idea>.generate(
-            20,
-            (i) => Idea(
-                  'Idea $i',
-                  'A description for $i',
-                ),
-          )
-        ),
-  );
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Text
-            (
-              'Upcoming Events',
-              style: Theme.of(context).textTheme.headline,
-            ),
-          ),
-          new Expanded(
-            child: ListView.builder(
-              itemCount: events.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Text(Helpers.informalDate(events[index].date) + ":" + Helpers.simplifyDate(events[index].date)),
-                  title: Text(events[index].title),
-                  onTap: () { /* TODO react to the tile being tapped */ },
-                );
-              },
-            ),
-          ),
-          Divider(),
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10),
-            child: Text
-            (
-              'People',
-              style: Theme.of(context).textTheme.headline,
-            ),
-          ),
-          new Expanded(
-            child: GridView.builder(
-              itemCount: people.length,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return new GestureDetector(
-                  child: new Card(
-                    elevation: 5.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).unselectedWidgetColor,
-                            child: Text(Helpers.getInitials(people[index].name)),
-                            minRadius: 60,
-                          ),
-                        ),
-                        Text
-                        (
-                          people[index].name,
-                          style: Theme.of(context).textTheme.subtitle,
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PersonPage(personName: people[index].name,)),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      body: _children[_selectedIndex], 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           navigateToAddAndReturnResult(context);
@@ -216,22 +121,6 @@ class _HomeState extends State<HomePage>{
      ),
     );
   }
-
-  // actions: <Widget>[
-  //         IconButton(
-  //             icon: Icon(Icons.settings),
-  //             onPressed: () {
-  //               //TODO settings page
-  //               showDialog(
-  //                 context: context, 
-  //                 builder: (BuildContext context) {
-  //                   return AlertDialog(
-  //                     content: Text("settings clicked"));
-  //                 }
-  //               );
-  //             },
-  //           ),
-  //       ],
 
   void _onItemTapped(int index) {
    setState(() {

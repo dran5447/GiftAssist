@@ -29,7 +29,7 @@ class _IdeasState extends State<PersonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About ' + personName),
+        title: Text('About'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
