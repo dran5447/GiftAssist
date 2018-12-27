@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'addgiftideapage.dart';
-import 'objectmodel.dart';
 import 'mainpages/people.dart';
 import 'mainpages/home.dart';
 import 'mainpages/events.dart';
@@ -30,9 +29,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Home'),
-      // ),
       body: HomePage(),
     );
   }

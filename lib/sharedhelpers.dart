@@ -9,8 +9,10 @@ class Helpers{
       new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', getTempIdeasList2(), true),
       new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', getTempIdeasList1()),
       new Event(new DateTime(2018, 12, 27), 'Someones bday maybe', 'n/a', getTempIdeasList2()),
+      new Event(new DateTime(2018, 12, 28), 'Someones bday????', 'n/a', getTempIdeasList2()),
       new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1', getTempIdeasList2()),
       new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop', getTempIdeasList1()),
+      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop', getTempIdeasList1()),
     ];
     return events;
   }
@@ -39,6 +41,31 @@ class Helpers{
 
   // END TEMP HELPERS
 
+  static List<Event> filterPastEvents(List<Event> events){
+    List<Event> updated = new List<Event>();
+
+    for(Event e in events){
+      if(e.date.difference(DateTime.now()).inDays >= 0){
+        updated.add(e);
+      }
+      else if(e.recurring){
+        //TODO add logic for recurring events
+      }
+    }
+    return updated;
+  }
+
+  static List<Event> sortEvents(List<Event> events){
+    //TODO event sorting
+    // var previous = null;
+    // for(int i=1; i<events.length; i++){
+
+    //   if(previous != null){
+
+    //   }
+    // }
+  }
+
   static String getInitials(String name){
     var nameList = name.split(" ");
     String initials = '';
@@ -48,61 +75,17 @@ class Helpers{
     return initials;
   }
 
-  static String simplifyDate(DateTime date){
-    return new DateFormat('MM/dd/yyy').format(date);
-  }
-
-  static String informalDate(DateTime date){
-    var today = DateTime.now();
-
-    String month;
-      switch (date.month) {
-        case 1:
-          month = "January";
-          break;
-        case 2:
-          month = "February";
-          break;
-        case 3:
-          month = "March";
-          break;
-        case 4:
-          month = "April";
-          break;
-        case 5:
-          month = "May";
-          break;
-        case 6:
-          month = "June";
-          break;
-        case 7:
-          month = "July";
-          break;
-        case 8:
-          month = "August";
-          break;
-        case 9:
-          month = "September";
-          break;
-        case 10:
-          month = "October";
-          break;
-        case 11:
-          month = "November";
-          break;
-        case 12:
-          month = "December";
-          break;
-      }
+  static String formatDate(DateTime date){
+    var now = DateTime.now();
+    var today = new DateTime(now.year, now.month, now.day);
 
     Duration difference = today.difference(date);
 
-    //TODO this may still be iffy..need to verify hours/days logic
-    if (difference.inDays == 0 &&  difference.inHours < -24) {
+    if (difference.inDays == 0) {
       return "Today";
     } else if (difference.inDays > 0) {
       return "Past";
-    } else if (difference.inDays < -2 && difference.inHours >= -48) {
+    } else if (difference.inDays == -1) {
       return "Tomorrow";
     } else if (difference.inDays > -7) {
       switch (date.weekday) {
@@ -113,7 +96,7 @@ class Helpers{
         case 3:
           return "Wednesday";
         case 4:
-          return "Thurdsday";
+          return "Thursday";
         case 5:
           return "Friday";
         case 6:
@@ -121,11 +104,7 @@ class Helpers{
         case 7:
           return "Sunday";
       }
-    } else if (date.year == today.year) {
-      return '${date.day} $month';
-    } else {
-      return '${date.day} $month ${date.year}';
-    }
-    return "";
+    } 
+    return new DateFormat('MM/dd/yyy').format(date);
   }
 }

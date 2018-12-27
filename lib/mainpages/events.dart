@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../objectmodel.dart';
 import '../sharedhelpers.dart';
+import '../events_ideas_treeview.dart';
 
 class EventWidget extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class EventWidget extends StatefulWidget {
 }
 
 class EventState extends State<EventWidget>{
+  //TODO get events data for all people - may need refactor to the treeview
+  //TODO get sorted list of events using two helper methods
   final List<Event> events = Helpers.getTempEventsList();
 
   @override 
@@ -18,18 +21,7 @@ class EventState extends State<EventWidget>{
       ),
       body: Column(
         children: <Widget>[
-          new Expanded(
-            child: ListView.builder(
-              itemCount: events.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Text(Helpers.informalDate(events[index].date) + ":" + Helpers.simplifyDate(events[index].date)),
-                  title: Text(events[index].title),
-                  onTap: () { /* TODO react to the tile being tapped */ },
-                );
-              },
-            ),
-          ),
+           EventIdeasTreeWidget(events: events),
         ],
       ),
     );

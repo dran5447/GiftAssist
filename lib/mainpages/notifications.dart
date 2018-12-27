@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../objectmodel.dart';
-import '../sharedhelpers.dart';
 import 'dart:math';
 
 class NotificationWidget extends StatefulWidget {

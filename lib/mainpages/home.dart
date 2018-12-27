@@ -8,7 +8,8 @@ class HomeWidget extends StatefulWidget {
 }
 
 class HomeState extends State<HomeWidget>{
-  final List<Event> events = Helpers.getTempEventsList();
+  //TODO pass in a limited number of upcoming global events
+  final List<Event> events = Helpers.filterPastEvents(Helpers.getTempEventsList());
 
   @override 
   Widget build(BuildContext context) {
@@ -26,12 +27,13 @@ class HomeState extends State<HomeWidget>{
               style: Theme.of(context).textTheme.headline,
             ),
           ),
+          //TODO notification/announcements area
           new Expanded(
             child: ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Text(Helpers.informalDate(events[index].date) + ":" + Helpers.simplifyDate(events[index].date)),
+                  leading: Text(Helpers.formatDate(events[index].date)),
                   title: Text(events[index].title),
                   onTap: () { /* TODO react to the tile being tapped */ },
                 );

@@ -13,6 +13,7 @@ Flutter project for tracking gift ideas
 - style upcoming unconfirmed events in red
 - person page : swipe quick control functionality on gift ideas and events 
 - custom text styles
+- person page: tap/hold gift idea -> multiselect delete, edit, or move to other event section
 - auth
 - connect to user storage places to persist data
 - pull actual data
