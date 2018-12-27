@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../objectmodel.dart';
 import '../sharedhelpers.dart';
-import 'dart:math';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -9,15 +8,7 @@ class HomeWidget extends StatefulWidget {
 }
 
 class HomeState extends State<HomeWidget>{
-  static Random random = new Random();
-  final List<Event> events = List<Event>.generate(
-    15,
-    (i) => Event(
-      new DateTime(2018, 12, random.nextInt(31)),//.now(),
-          'title $i',
-          'A description for $i',
-        ),
-  );
+  final List<Event> events = Helpers.getTempEventsList();
 
   @override 
   Widget build(BuildContext context) {

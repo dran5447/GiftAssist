@@ -1,6 +1,43 @@
 import 'package:intl/intl.dart';
+import 'objectmodel.dart';
 
 class Helpers{
+
+  // TEMPORARY HELPERS
+  static List<Event> getTempEventsList(){
+    final List<Event> events = [
+      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', getTempIdeasList2(), true),
+      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', getTempIdeasList1()),
+      new Event(new DateTime(2018, 12, 27), 'Someones bday maybe', 'n/a', getTempIdeasList2()),
+      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1', getTempIdeasList2()),
+      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop', getTempIdeasList1()),
+    ];
+    return events;
+  }
+
+  static List<Idea> getTempIdeasList1(){
+    final List<Idea> ideas = [
+      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com'),
+    ];
+    return ideas;
+  }
+
+  static List<Idea> getTempIdeasList2(){
+    final List<Idea> ideas = [
+      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com'),
+      new Idea('Gift Idea 2', 'asdf', ''),
+    ];
+    return ideas;
+  }
+
+  static List<Person> getTempPeopleList(){
+    final List<Person> people = [
+      new Person('Mike', getTempEventsList(), getTempIdeasList1()),
+    ];
+    return people;
+  }
+
+  // END TEMP HELPERS
 
   static String getInitials(String name){
     var nameList = name.split(" ");

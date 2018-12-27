@@ -17,13 +17,8 @@ class _IdeasState extends State<PersonPage> {
   
   _IdeasState({Key key, this.personName});
 
-  final List<Idea> todos = List<Idea>.generate(
-    20,
-    (i) => Idea(
-          'Idea $i',
-          'A description for $i',
-        ),
-  );
+  final List<Idea> ideas = Helpers.getTempIdeasList1();
+  final List<Event> events = Helpers.getTempEventsList();
 
   @override
   Widget build(BuildContext context) {
@@ -58,32 +53,52 @@ class _IdeasState extends State<PersonPage> {
             padding: EdgeInsets.only(bottom: 10),
             child: Text(
               'Events',
-              style: Theme.of(context).textTheme.headline,
-            ),
-          ),
-          Divider(),
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10),
-            child: Text(
-              'Gift Ideas',
-              style: Theme.of(context).textTheme.headline,
+              style: Theme.of(context).textTheme.subhead,
+              textAlign: TextAlign.left,
             ),
           ),
           new Expanded(
             child: ListView.builder(
-              itemCount: todos.length,
+              itemCount: events.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Icon
-                  (
-                    Icons.card_giftcard, 
-                    size:40,
+                var item = events[index];
+                return new ExpansionTile(
+                  initiallyExpanded: item.isExpanded,
+                  key: PageStorageKey<Event>(item),
+                  leading: Text(
+                    item.title,
+                    style: Theme.of(context).textTheme.title,
                   ),
-                  title: Text(todos[index].title),
-                  subtitle: Text(todos[index].description),
-                  isThreeLine: true,
-                  onTap: () { /* react to the tile being tapped */ },
-                );
+                  title: Text(
+                    '(' + Helpers.informalDate(item.date) + ', ' + Helpers.simplifyDate(item.date) + ')',
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                  children: item.ideas.map((Idea idea) {
+                    return Padding(
+                      padding: EdgeInsets.only(left:50.0, right: 30.0),
+                      child: GestureDetector(
+                        child: Card(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                                child: Text(
+                                    idea.title,
+                                    style: Theme.of(context).textTheme.body1,
+                                ),
+                              ),
+                              //TODO indicators or actions
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          //TODO idea tapped
+                        },
+                      ),
+                    );
+                  }).toList(),
+                );          
               },
             ),
           ),

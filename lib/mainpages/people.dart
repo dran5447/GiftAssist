@@ -9,27 +9,7 @@ class PeopleWidget extends StatefulWidget {
 }
 
 class PeopleState extends State<PeopleWidget>{
-  final List<Person> people = List<Person>.generate(
-    20,
-    (i) => Person(
-          'Person $i',
-          new List<Event>.generate(
-            5,
-            (i) => Event(
-              new DateTime.now(),
-                  'title $i',
-                  'A description for $i',
-                ),
-          ),
-          List<Idea>.generate(
-            20,
-            (i) => Idea(
-                  'Idea $i',
-                  'A description for $i',
-                ),
-          )
-        ),
-  );
+  final List<Person> people = Helpers.getTempPeopleList();
 
   @override 
   Widget build(BuildContext context) {
