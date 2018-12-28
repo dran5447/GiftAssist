@@ -8,13 +8,13 @@ class Helpers{
   // TEMPORARY HELPERS
   static List<Event> getTempEventsList(){
     final List<Event> events = [
-      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', getTempIdeasList2(), true),
-      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', getTempIdeasList1()),
-      new Event(new DateTime(2018, 12, 27), 'Someones bday maybe', 'n/a', getTempIdeasList2()),
-      new Event(new DateTime(2018, 12, 28), 'Someones bday????', 'n/a', getTempIdeasList2()),
-      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1', getTempIdeasList2()),
-      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop', getTempIdeasList1()),
-      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop', getTempIdeasList1()),
+      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, getTempIdeasList2(), true),
+      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', EventType.FOOD_OUTING, getTempIdeasList1()),
+      new Event(new DateTime(2018, 12, 28), 'Someones bday?', 'n/a',EventType.BABY_SHOWER, getTempIdeasList2()),
+      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1',EventType.OTHER, getTempIdeasList2()),
+      new Event(new DateTime(2018, 12, 31), 'sadfasdfasd 2', '3-2-1',EventType.OTHER, getTempIdeasList2()),
+      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER, getTempIdeasList1()),
+      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.OTHER, getTempIdeasList1()),
     ];
     return events;
   }
@@ -43,7 +43,34 @@ class Helpers{
 
   // END TEMP HELPERS
 
-  static NavigateToAddAndReturnResult(BuildContext context) async{
+  static List<EventDateGroup> getEventGroupingsByDate(List<Event> events){
+    List<EventDateGroup> eventGroups = [];
+
+    //Assume for now they are sorted at this point
+    //TODO sort
+
+    List<Event> currentDateEventList = [];
+    currentDateEventList.add(events[0]);
+    for(int i=1; i<events.length; i++){
+      if(events[i].date != events[i-1].date){
+        List<Event>  temp = new List.from(currentDateEventList);
+        // currentDateEventList;
+        eventGroups.add(new EventDateGroup(Helpers.formatDate(currentDateEventList[0].date), temp));
+        currentDateEventList.clear();
+        currentDateEventList.add(events[i]);
+      }
+      else{
+        currentDateEventList.add(events[i]);
+      }
+      if(i == events.length-1){
+        var temp = currentDateEventList;
+        eventGroups.add(new EventDateGroup(Helpers.formatDate(events[i].date), temp));
+      }
+    }
+    return eventGroups;
+  }
+
+  static navigateToAddAndReturnResult(BuildContext context) async{
     // Navigator.push returns a Future that will complete after we call
     // Navigator.pop on the following screen to feedback success or failure
     final result = await Navigator.push(

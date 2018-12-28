@@ -21,9 +21,9 @@ void main() {
 //color scheme:
   //burgundy - Color.fromARGB(255, 126, 71, 98),
   //grey - Color.fromARGB(255, 76, 66, 74),
-  //dark teal - Color.fromARGB(255, 83, 116, 127),
+  //dark teal - Color.fromARGB(255, 83, 116, 127), 
   //light teal - Color.fromARGB(255, 177, 197, 188),
-  //old paper -F9F6E4
+  //old paper - Color.fromARGB(255, 249, 246, 228)
 
 class MyApp extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class _HomeState extends State<HomePage>{
       body: _children[_selectedIndex], 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Helpers.NavigateToAddAndReturnResult(context);
+          Helpers.navigateToAddAndReturnResult(context);
         }, backgroundColor: Color.fromARGB(255, 76, 66, 74),
         tooltip: 'Quick Add Gift Idea',
         child: Icon(Icons.add),

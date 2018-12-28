@@ -83,12 +83,12 @@ class _IdeasState extends State<PersonPage> {
               label: 'Add Gift Idea',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: () { 
-                Helpers.NavigateToAddAndReturnResult(context);
+                Helpers.navigateToAddAndReturnResult(context);
               }
             ),
             SpeedDialChild(
               child: Icon(Icons.calendar_today),
-              backgroundColor: Color.fromARGB(255, 83, 116, 127)
+              backgroundColor: Color.fromARGB(255, 83, 116, 127),
               label: 'Add Event',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: ()  { 
