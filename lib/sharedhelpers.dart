@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'objectmodel.dart';
 import 'addgiftideapage.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Helpers{
 
@@ -42,6 +43,16 @@ class Helpers{
   }
 
   // END TEMP HELPERS
+
+  static String generateUUID(){
+    var length = 20;
+    var str = '';
+
+    for(int i=0; i< length; i++){
+      str += new Random().nextInt(9).toString();
+    }
+    return str;
+  }
 
   static List<EventDateGroup> getEventGroupingsByDate(List<Event> events){
     List<EventDateGroup> eventGroups = [];

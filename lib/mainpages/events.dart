@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../objectmodel.dart';
 import '../sharedhelpers.dart';
 import '../events_ideas_treeview.dart';
+import '../floatingAdd.dart';
 
 class EventWidget extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class EventState extends State<EventWidget>{
            EventIdeasTreeWidget(events: events),
         ],
       ),
+      floatingActionButton: FABAdd(),
     );
   }
 }

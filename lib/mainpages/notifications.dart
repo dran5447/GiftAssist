@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../floatingAdd.dart';
 
 class NotificationWidget extends StatefulWidget {
   @override
@@ -41,6 +42,7 @@ class NotificationState extends State<NotificationWidget>{
           // ),
         ],
       ),
+      floatingActionButton: FABAdd(),
     );
   }
 }

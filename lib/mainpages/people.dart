@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../objectmodel.dart';
 import '../personpage.dart';
 import '../sharedhelpers.dart';
+import '../floatingAdd.dart';
 
 class PeopleWidget extends StatefulWidget {
   @override
@@ -66,7 +67,8 @@ class PeopleState extends State<PeopleWidget>{
             ),
           ),
         ]
-       )
+       ),
+       floatingActionButton: FABAdd(),
     );
   }
 }

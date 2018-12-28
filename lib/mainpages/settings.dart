@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../sharedhelpers.dart';
+import '../floatingAdd.dart';
 
 class SettingsWidget extends StatefulWidget {
   @override
@@ -41,6 +43,7 @@ class SettingsState extends State<SettingsWidget>{
           // ),
         ],
       ),
+      floatingActionButton: FABAdd(),
     );
   }
 }

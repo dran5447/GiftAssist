@@ -29,19 +29,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomePage(),
+      body: MainPage(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {   
-  HomePage({Key key}) : super(key: key);
+class MainPage extends StatefulWidget {   
+  MainPage({Key key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _MainState createState() =>_MainState();
 }
 
-class _HomeState extends State<HomePage>{
+class _MainState extends State<MainPage>{
   int _selectedIndex = 0;
   final List<Widget> _children = [
     HomeWidget(),
@@ -51,19 +51,10 @@ class _HomeState extends State<HomePage>{
     SettingsWidget(),
   ];
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_selectedIndex], 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Helpers.navigateToAddAndReturnResult(context);
-        }, backgroundColor: Color.fromARGB(255, 76, 66, 74),
-        tooltip: 'Quick Add Gift Idea',
-        child: Icon(Icons.add),
-      ),
-
       bottomNavigationBar: BottomNavigationBar(
        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
