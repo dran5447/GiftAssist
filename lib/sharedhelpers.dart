@@ -11,26 +11,25 @@ class Helpers{
     final List<Event> events = [
       new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, getTempIdeasList2(), true),
       new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', EventType.FOOD_OUTING, getTempIdeasList1()),
-      new Event(new DateTime(2018, 12, 28), 'Someones bday?', 'n/a',EventType.BABY_SHOWER, getTempIdeasList2()),
       new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1',EventType.OTHER, getTempIdeasList2()),
-      new Event(new DateTime(2018, 12, 31), 'sadfasdfasd 2', '3-2-1',EventType.OTHER, getTempIdeasList2()),
       new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER, getTempIdeasList1()),
-      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.OTHER, getTempIdeasList1()),
+      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.BIRTHDAY, getTempIdeasList1()),
+      new Event(new DateTime(2019, 2, 4), 'Valentines Day', '',EventType.VALENTINES, getTempIdeasList1()),
     ];
     return events;
   }
 
   static List<Idea> getTempIdeasList1(){
     final List<Idea> ideas = [
-      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com',true),
+      new Idea('Something Cool', 'something cool', 'www.amazon.com', true),
     ];
     return ideas;
   }
 
   static List<Idea> getTempIdeasList2(){
     final List<Idea> ideas = [
-      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com'),
-      new Idea('Gift Idea 2', 'asdf', ''),
+      new Idea('Water', '', 'www.amazon.com'),
+      new Idea('Baseball', '', ''),
     ];
     return ideas;
   }

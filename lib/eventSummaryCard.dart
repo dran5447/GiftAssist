@@ -18,28 +18,29 @@ class EventSummaryCard extends StatelessWidget {
             leading: Icon(event.icon, size:50.0),
             title: Text(event.title),
             subtitle: Text(Helpers.formatDate(event.date)),
-            trailing: Padding(
-              padding: EdgeInsets.only(right: 0.0),
-              child: EventStatusSnippet(event),
-            ), 
+            trailing: EventStatusSnippet(event),
           ),
-          ButtonBar(
+          Row(   
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              FlatButton(
-                textColor: Color.fromARGB(255, 126, 71, 98),
-                child: Text('View Details', style: Theme.of(context).textTheme.subhead),
-                onPressed: (){
-                  //TODO event pressed
-                  showDialog(
-                    context: context,
-                    builder: (context){
-                      return new AlertDialog(
-                        content: Text('event pressed'),
-                      );
-                    }
-                  );
-                },
-              )
+              Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: FlatButton(
+                  textColor: Color.fromARGB(255, 126, 71, 98),
+                  child: Text('View Details', style: Theme.of(context).textTheme.subhead),
+                  onPressed: (){
+                    //TODO event pressed
+                    showDialog(
+                      context: context,
+                      builder: (context){
+                        return new AlertDialog(
+                          content: Text('event pressed'),
+                        );
+                      }
+                    );
+                  },
+                )
+              ),
             ],
           )
         ],
