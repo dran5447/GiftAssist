@@ -22,7 +22,7 @@ class Helpers{
 
   static List<Idea> getTempIdeasList1(){
     final List<Idea> ideas = [
-      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com'),
+      new Idea('Gift Idea 1', 'something cool', 'www.amazon.com',true),
     ];
     return ideas;
   }

@@ -69,8 +69,6 @@ class _IdeasState extends State<PersonPage> {
           animatedIcon: AnimatedIcons.menu_close,
           animatedIconTheme: IconThemeData(size: 22.0),
           curve: Curves.bounceIn,
-          onOpen: () => print('OPENING DIAL'),
-          onClose: () => print('DIAL CLOSED'),
           tooltip: 'View Quick-Add Menu',
           heroTag: 'speed-dial-hero-tag',
           backgroundColor: Color.fromARGB(255, 126, 71, 98),

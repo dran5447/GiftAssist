@@ -3,6 +3,7 @@ import '../objectmodel.dart';
 import '../sharedhelpers.dart';
 import 'dart:math';
 import '../floatingAdd.dart';
+import '../eventSummaryCard.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -37,14 +38,13 @@ class HomeState extends State<HomeWidget>{
             child: ListView.builder(
               physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: events.length, //eventGroups[i].events.length,
+                itemCount: events.length,
                 itemBuilder: (context, j) {
-              //    var events = eventGroups[i].events;
                   return new Dismissible(
                     key: new Key(Helpers.generateUUID()),
                     direction: DismissDirection.endToStart,
                     background: Container(
-                      color: Colors.green, 
+                      color: Colors.green.shade300, 
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end, 
                         children: <Widget>[
@@ -85,38 +85,9 @@ class HomeState extends State<HomeWidget>{
                       );
                       Scaffold.of(context).showSnackBar(snackbar);
                     },
-                    child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            leading: Icon(events[j].icon, size:50.0),
-                            title: Text(events[j].title),
-                            subtitle: Text(Helpers.formatDate(events[j].date)),
-                          ),
-                          Text(
-                            'Ideas Completed = ' + events[j].ideasCompleted().toString()
-                          ), 
-                          ButtonBar(
-                            children: <Widget>[
-                              FlatButton(
-                                textColor: Color.fromARGB(255, 126, 71, 98),
-                                child: Text('View Details', style: Theme.of(context).textTheme.subhead),
-                                onPressed: (){
-                                  //TODO event pressed
-                                  showDialog(
-                                    context: context,
-                                    builder: (context){
-                                      return new AlertDialog(
-                                        content: Text('event pressed'),
-                                      );
-                                    }
-                                  );
-                                },
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: EventSummaryCard(events[j]),
                     ),
                   );
                 }
