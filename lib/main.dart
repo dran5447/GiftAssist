@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'mainpages/people.dart';
 import 'mainpages/home.dart';
-import 'mainpages/events.dart';
 import 'mainpages/notifications.dart';
 import 'mainpages/settings.dart';
 import 'sharedhelpers.dart';
@@ -45,7 +44,6 @@ class _MainState extends State<MainPage>{
   int _selectedIndex = 0;
   final List<Widget> _children = [
     HomeWidget(),
-    EventWidget(),
     PeopleWidget(),
     NotificationWidget(),
     SettingsWidget(),
@@ -61,15 +59,6 @@ class _MainState extends State<MainPage>{
             icon: Icon(Icons.home, color: Color.fromARGB(255, 126, 71, 98),), 
             title: Text(
               'Home',
-              style: new TextStyle(
-                color: Color.fromARGB(255, 126, 71, 98),
-              ),
-            )
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: Color.fromARGB(255, 126, 71, 98),),
-            title: Text(
-              'Events',
               style: new TextStyle(
                 color: Color.fromARGB(255, 126, 71, 98),
               ),
