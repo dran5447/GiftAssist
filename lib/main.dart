@@ -4,8 +4,14 @@ import 'mainpages/home.dart';
 import 'mainpages/notifications.dart';
 import 'mainpages/settings.dart';
 import 'sharedhelpers.dart';
+import 'storage.dart';
+
+import 'dart:io';
+import 'objectmodel.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
+  //Run app
   runApp(MaterialApp(
     theme: ThemeData(
         primarySwatch: Colors.grey,
@@ -19,16 +25,37 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  DataStorage storage;
+
+  Future<File> writeData(String item) async{
+    await storage.writeCounter(item);
+  }
+  Future<List<Idea>> readData() async{
+    var result = await storage.readCounter();
+    debugPrint(result.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
+    storage = DataStorage();
+    writeData("1").then((File file) {
+       writeData("2").then((File file) {
+           writeData("3").then((File file) {
+            readData();
+          });
+        });
+    });
+
     return Scaffold(
-      body: MainPage(),
+      body: MainPage(storage: storage),
     );
   }
 }
 
 class MainPage extends StatefulWidget {   
-  MainPage({Key key}) : super(key: key);
+  final DataStorage storage;
+
+  MainPage({Key key, @required this.storage}) : super(key: key);
 
   @override
   _MainState createState() =>_MainState();
