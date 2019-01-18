@@ -43,7 +43,7 @@ class SettingsState extends State<SettingsWidget>{
           // ),
         ],
       ),
-      floatingActionButton: FABAdd(),
+      floatingActionButton: FABAddIdea(),
     );
   }
 }

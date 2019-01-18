@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'objectmodel.dart';
 import 'sharedhelpers.dart';
 import 'events_ideas_treeview.dart';
-
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'floatingAdd.dart';
 
 class PersonPage extends StatefulWidget {
   final String personName;
@@ -65,37 +64,7 @@ class _IdeasState extends State<PersonPage> {
         ]
       ),
 
-      floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.menu_close,
-          animatedIconTheme: IconThemeData(size: 22.0),
-          curve: Curves.bounceIn,
-          tooltip: 'View Quick-Add Menu',
-          heroTag: 'speed-dial-hero-tag',
-          backgroundColor: Color.fromARGB(255, 126, 71, 98),
-          foregroundColor: Colors.white,
-          shape: CircleBorder(),
-          children: [
-            SpeedDialChild(
-              child: Icon(Icons.card_giftcard),
-              backgroundColor: Color.fromARGB(255, 76, 66, 74),
-              label: 'Add Gift Idea',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () { 
-                Helpers.navigateToAddAndReturnResult(context);
-              }
-            ),
-            SpeedDialChild(
-              child: Icon(Icons.calendar_today),
-              backgroundColor: Color.fromARGB(255, 83, 116, 127),
-              label: 'Add Event',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: ()  { 
-                //TODO add event tap
-                print('SECOND CHILD');
-              }
-            ),
-          ],
-        ),
+      floatingActionButton: FABSpeedDial(),
     );
   }
 }

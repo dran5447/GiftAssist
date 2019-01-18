@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'giftideaform.dart';
-
+import 'sharedhelpers.dart';
 
 class AddGiftIdeaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 76, 66, 74),
+        backgroundColor: Helpers.secondary,
         title: Text('New Gift Idea'),
       ),
       body: Column(

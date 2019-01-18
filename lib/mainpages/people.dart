@@ -68,7 +68,7 @@ class PeopleState extends State<PeopleWidget>{
           ),
         ]
        ),
-       floatingActionButton: FABAdd(),
+       floatingActionButton: FABAddPerson(),
     );
   }
 }

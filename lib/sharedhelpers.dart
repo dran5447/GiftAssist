@@ -1,10 +1,18 @@
 import 'package:intl/intl.dart';
 import 'objectmodel.dart';
 import 'addgiftideapage.dart';
+import 'addpersonpage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 class Helpers{
+
+  static Color primary = Color.fromARGB(255, 5, 32, 74);
+  static Color secondary = Color.fromARGB(255, 31, 122, 140);
+  static Color complement = Color.fromARGB(255, 43, 25, 61);
+  static Color neutralDark = Color.fromARGB(255, 56, 63, 81);
+  static Color neutralLight = Color.fromARGB(255, 196, 125, 135);
+
 
   // TEMPORARY HELPERS
   static List<Event> getTempEventsList(){
@@ -80,7 +88,7 @@ class Helpers{
     return eventGroups;
   }
 
-  static navigateToAddAndReturnResult(BuildContext context) async{
+  static navigateToAddIdeaAndReturnResult(BuildContext context) async{
     // Navigator.push returns a Future that will complete after we call
     // Navigator.pop on the following screen to feedback success or failure
     final result = await Navigator.push(
@@ -95,6 +103,26 @@ class Helpers{
     }
     
   }
+
+  static navigateToAddPersonAndReturnResult(BuildContext context) async{
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the following screen to feedback success or failure
+
+
+    //TODO add quick add person page
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddPersonScreen()),
+    );
+
+    if (result != null){
+      // After result returned hide any previous snackbars and show result
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
+    }
+    
+  }
+
 
   static List<Event> filterPastEvents(List<Event> events){
     List<Event> updated = new List<Event>();

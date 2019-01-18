@@ -9,20 +9,14 @@ void main() {
   runApp(MaterialApp(
     theme: ThemeData(
         primarySwatch: Colors.grey,
-        primaryColor: Color.fromARGB(255, 126, 71, 98),
+        primaryColor: Helpers.primary,
         unselectedWidgetColor: Colors.grey.shade200,
-        accentColor: Color.fromARGB(255, 126, 71, 98),
+        accentColor: Helpers.primary,
         bottomAppBarColor: Color.fromARGB(255, 0, 0, 0)
       ),
       home: MyApp(),
   ));
 }
-//color scheme:
-  //burgundy - Color.fromARGB(255, 126, 71, 98),
-  //grey - Color.fromARGB(255, 76, 66, 74),
-  //dark teal - Color.fromARGB(255, 83, 116, 127), 
-  //light teal - Color.fromARGB(255, 177, 197, 188),
-  //old paper - Color.fromARGB(255, 249, 246, 228)
 
 class MyApp extends StatelessWidget {
   @override
@@ -56,38 +50,38 @@ class _MainState extends State<MainPage>{
       bottomNavigationBar: BottomNavigationBar(
        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Color.fromARGB(255, 126, 71, 98),), 
+            icon: Icon(Icons.home, color: Helpers.primary), 
             title: Text(
               'Home',
               style: new TextStyle(
-                color: Color.fromARGB(255, 126, 71, 98),
+                color: Helpers.primary,
               ),
             )
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Color.fromARGB(255, 126, 71, 98),),
+            icon: Icon(Icons.person, color: Helpers.primary),
             title: Text(
               'People',
               style: new TextStyle(
-                color: Color.fromARGB(255, 126, 71, 98),
+                color: Helpers.primary,
               ),
             )
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, color: Color.fromARGB(255, 126, 71, 98),),
+            icon: Icon(Icons.notifications, color: Helpers.primary,),
             title: Text(
               'Notifications',
               style: new TextStyle(
-                color: Color.fromARGB(255, 126, 71, 98),
+                color: Helpers.primary,
               ),
             )
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: Color.fromARGB(255, 126, 71, 98),),
+            icon: Icon(Icons.settings, color: Helpers.primary,),
             title: Text(
               'Settings',
               style: new TextStyle(
-                color: Color.fromARGB(255, 126, 71, 98),
+                color: Helpers.primary,
               ),
             )
           ),

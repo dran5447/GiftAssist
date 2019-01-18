@@ -95,7 +95,7 @@ class HomeState extends State<HomeWidget>{
           ),
         ],
       ),
-      floatingActionButton: FABAdd(),
+      floatingActionButton: FABAddIdea(),
     );
   }
 }
