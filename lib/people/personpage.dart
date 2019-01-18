@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'objectmodel.dart';
-import 'sharedhelpers.dart';
-import 'events_ideas_treeview.dart';
-import 'floatingAdd.dart';
+import '../shared/objectmodel.dart';
+import '../shared/sharedhelpers.dart';
+import '../events/events_ideas_treeview.dart';
+import '../shared/floatingAdd.dart';
 
 class PersonPage extends StatefulWidget {
   final String personName;

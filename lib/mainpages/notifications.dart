@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../floatingAdd.dart';
+import '../shared/floatingAdd.dart';
 
 class NotificationWidget extends StatefulWidget {
   @override

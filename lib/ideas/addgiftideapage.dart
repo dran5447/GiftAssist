@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'giftideaform.dart';
-import 'sharedhelpers.dart';
+import '../shared/sharedhelpers.dart';
 
 class AddGiftIdeaScreen extends StatelessWidget {
   @override

@@ -3,11 +3,11 @@ import 'mainpages/people.dart';
 import 'mainpages/home.dart';
 import 'mainpages/notifications.dart';
 import 'mainpages/settings.dart';
-import 'sharedhelpers.dart';
-import 'storage.dart';
+import 'shared/sharedhelpers.dart';
+import 'shared/storage.dart';
 
 import 'dart:io';
-import 'objectmodel.dart';
+import 'shared/objectmodel.dart';
 import 'package:flutter/foundation.dart';
 
 void main() {

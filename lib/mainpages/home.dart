@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../objectmodel.dart';
-import '../sharedhelpers.dart';
+import '../shared/objectmodel.dart';
+import '../shared/sharedhelpers.dart';
 import 'dart:math';
-import '../floatingAdd.dart';
-import '../eventSummaryCard.dart';
+import '../shared/floatingAdd.dart';
+import '../events/eventSummaryCard.dart';
 
 class HomeWidget extends StatefulWidget {
   @override

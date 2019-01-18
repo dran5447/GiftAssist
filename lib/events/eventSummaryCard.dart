@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'objectmodel.dart';
-import 'sharedhelpers.dart';
+import '../shared/objectmodel.dart';
+import '../shared/sharedhelpers.dart';
 import 'eventdetailspage.dart';
 
 class EventSummaryCard extends StatelessWidget {

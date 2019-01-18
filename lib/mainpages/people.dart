@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../objectmodel.dart';
-import '../personpage.dart';
-import '../sharedhelpers.dart';
-import '../floatingAdd.dart';
+import '../shared/objectmodel.dart';
+import '../people/personpage.dart';
+import '../shared/sharedhelpers.dart';
+import '../shared/floatingAdd.dart';
 
 class PeopleWidget extends StatefulWidget {
   @override

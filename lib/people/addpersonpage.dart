@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'giftideaform.dart';
-import 'sharedhelpers.dart';
+import '../ideas/giftideaform.dart';
+import '../shared/sharedhelpers.dart';
 
 class AddPersonScreen extends StatelessWidget {
   @override
