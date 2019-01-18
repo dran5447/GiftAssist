@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'objectmodel.dart';
 import 'sharedhelpers.dart';
+import 'eventdetailspage.dart';
 
 class EventSummaryCard extends StatelessWidget {
 
@@ -20,14 +21,10 @@ class EventSummaryCard extends StatelessWidget {
             title: Text(event.title),
             subtitle: Text(Helpers.formatDate(event.date)),
             trailing: EventStatusSnippet(event),
-            onTap: (){//TODO event pressed
-              showDialog(
-                context: context,
-                builder: (context){
-                  return new AlertDialog(
-                    content: Text('event pressed'),
-                  );
-                }
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EventDetailPage(event: event)),
               );
             },
           ),
