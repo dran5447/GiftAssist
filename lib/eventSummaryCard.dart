@@ -15,34 +15,22 @@ class EventSummaryCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ListTile(
+            contentPadding: EdgeInsets.all(20.0),
             leading: Icon(event.icon, size:50.0),
             title: Text(event.title),
             subtitle: Text(Helpers.formatDate(event.date)),
             trailing: EventStatusSnippet(event),
+            onTap: (){//TODO event pressed
+              showDialog(
+                context: context,
+                builder: (context){
+                  return new AlertDialog(
+                    content: Text('event pressed'),
+                  );
+                }
+              );
+            },
           ),
-          Row(   
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: FlatButton(
-                  textColor: Color.fromARGB(255, 126, 71, 98),
-                  child: Text('View Details', style: Theme.of(context).textTheme.subhead),
-                  onPressed: (){
-                    //TODO event pressed
-                    showDialog(
-                      context: context,
-                      builder: (context){
-                        return new AlertDialog(
-                          content: Text('event pressed'),
-                        );
-                      }
-                    );
-                  },
-                )
-              ),
-            ],
-          )
         ],
       ),
     );
