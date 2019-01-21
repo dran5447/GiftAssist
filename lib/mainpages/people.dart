@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
-import '../shared/objectmodel.dart';
-import '../people/personpage.dart';
-import '../shared/sharedhelpers.dart';
+import '../model/person.dart';
 import '../shared/floatingAdd.dart';
+import '../shared/datastore.dart';
+import '../people/peopleList.dart';
 
 class PeopleWidget extends StatefulWidget {
+  PeopleWidget({Key key}) : super(key: key);
+
   @override
   PeopleState createState() => PeopleState();
 }
 
 class PeopleState extends State<PeopleWidget>{
-  final List<Person> people = Helpers.getTempPeopleList();
+  final DataStore storage = DataStore();
+
+  PeopleState({Key key});
+
+  static List<Person> people;
+
+  Future<List<Person>> getPeople() async{
+    var result = await storage.retrievePeople();
+    return result;
+  }
+
+  void tempDelete() async{
+    setState(() {
+      storage.tempDeletePersonFileContents();
+    });
+  }
 
   @override 
   Widget build(BuildContext context) {
@@ -29,40 +46,26 @@ class PeopleState extends State<PeopleWidget>{
               style: Theme.of(context).textTheme.headline,
             ),
           ),
+          FlatButton(
+            color: Colors.red,
+            textColor: Colors.white,
+            child: Text("TEMP DELETE"),
+            onPressed: tempDelete,
+          ),  //TODO delete later
           new Expanded(
-            child: GridView.builder(
-              itemCount: people.length,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return new GestureDetector(
-                  child: new Card(
-                    elevation: 5.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).unselectedWidgetColor,
-                            child: Text(Helpers.getInitials(people[index].name)),
-                            minRadius: 60,
-                          ),
-                        ),
-                        Text
-                        (
-                          people[index].name,
-                          style: Theme.of(context).textTheme.subtitle,
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PersonPage(personName: people[index].name,)),
-                    );
-                  },
-                );
+            child: FutureBuilder<List<Person>>(
+              future: getPeople(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) print(snapshot.error);
+
+                return snapshot.hasData
+                    ? PeopleList(people: snapshot.data)
+                    : Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child:Center(
+                            child: Text("None addded. Click the Plus sign in the bottom right to add a Person.")
+                        )
+                      );
               },
             ),
           ),

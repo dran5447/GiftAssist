@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/objectmodel.dart';
+import '../model/event.dart';
 import '../shared/sharedhelpers.dart';
 import 'eventdetailspage.dart';
 
@@ -17,7 +17,7 @@ class EventSummaryCard extends StatelessWidget {
         children: <Widget>[
           ListTile(
             contentPadding: EdgeInsets.all(20.0),
-            leading: Icon(event.icon, size:50.0),
+            leading: Icon(event.getIcon(), size:50.0),
             title: Text(event.title),
             subtitle: Text(Helpers.formatDate(event.date)),
             trailing: EventStatusSnippet(event),

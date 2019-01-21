@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
-import 'objectmodel.dart';
+import '../model/idea.dart';
+import '../model/event.dart';
+import '../model/person.dart';
 import '../ideas/addgiftideapage.dart';
 import '../people/addpersonpage.dart';
 import 'package:flutter/material.dart';

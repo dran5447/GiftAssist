@@ -4,13 +4,15 @@ import 'mainpages/home.dart';
 import 'mainpages/notifications.dart';
 import 'mainpages/settings.dart';
 import 'shared/sharedhelpers.dart';
-import 'shared/storage.dart';
+import 'model/idea.dart';
+import 'shared/datastore.dart';
 
 import 'dart:io';
-import 'shared/objectmodel.dart';
 import 'package:flutter/foundation.dart';
 
 void main() {
+  //TODO on load, retrieve data and save to datastore
+
   //Run app
   runApp(MaterialApp(
     theme: ThemeData(
@@ -25,37 +27,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  DataStorage storage;
-
-  Future<File> writeData(String item) async{
-    await storage.writeCounter(item);
-  }
-  Future<List<Idea>> readData() async{
-    var result = await storage.readCounter();
-    debugPrint(result.toString());
-  }
-
   @override
   Widget build(BuildContext context) {
-    storage = DataStorage();
-    writeData("1").then((File file) {
-       writeData("2").then((File file) {
-           writeData("3").then((File file) {
-            readData();
-          });
-        });
-    });
-
     return Scaffold(
-      body: MainPage(storage: storage),
+      body: MainPage(),
     );
   }
 }
 
-class MainPage extends StatefulWidget {   
-  final DataStorage storage;
-
-  MainPage({Key key, @required this.storage}) : super(key: key);
+class MainPage extends StatefulWidget { 
+  MainPage({Key key}) : super(key: key);
 
   @override
   _MainState createState() =>_MainState();
@@ -63,12 +44,15 @@ class MainPage extends StatefulWidget {
 
 class _MainState extends State<MainPage>{
   int _selectedIndex = 0;
+
   final List<Widget> _children = [
     HomeWidget(),
     PeopleWidget(),
     NotificationWidget(),
     SettingsWidget(),
   ];
+
+  _MainState ({Key key});
 
   @override
   Widget build(BuildContext context) {

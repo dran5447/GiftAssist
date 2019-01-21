@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../ideas/giftideaform.dart';
+import 'personform.dart';
 import '../shared/sharedhelpers.dart';
 
 class AddPersonScreen extends StatelessWidget {
@@ -15,13 +15,13 @@ class AddPersonScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 20, bottom: 10),
             child: Text(
-              "TODO info",
+              "Add some 'PERSONal' details ;)",
             ),
           ),    
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 20),
-          //   child: GiftIdeaForm()
-          // ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: PersonForm()
+          ),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../shared/objectmodel.dart';
+import '../model/event.dart';
+import '../model/idea.dart';
 import '../shared/sharedhelpers.dart';
 
 class EventIdeasTreeWidget extends StatelessWidget {

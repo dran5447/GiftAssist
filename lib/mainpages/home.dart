@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import '../shared/objectmodel.dart';
+import '../model/event.dart';
 import '../shared/sharedhelpers.dart';
 import 'dart:math';
 import '../shared/floatingAdd.dart';
 import '../events/eventSummaryCard.dart';
+import '../shared/datastore.dart';
 
 class HomeWidget extends StatefulWidget {
+  HomeWidget({Key key}) : super(key: key);
+ 
   @override
   HomeState createState() => HomeState();
 }
 
 class HomeState extends State<HomeWidget>{
   static Random random = new Random();
+
+  HomeState({Key key});
 
   //TODO pass in a limited number of upcoming global events
   var events = Helpers.getTempEventsList();

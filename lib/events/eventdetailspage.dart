@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/objectmodel.dart';
-import '../shared/sharedhelpers.dart';
+import '../model/event.dart';
 
 class EventDetailPage extends StatefulWidget {
   final Event event;
