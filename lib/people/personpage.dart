@@ -14,7 +14,7 @@ class PersonPage extends StatefulWidget {
   _IdeasState createState() => _IdeasState(personName: personName);
 }
 
-class _IdeasState extends State<PersonPage> {
+class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin {
   final String personName;
   
   _IdeasState({Key key, this.personName});
@@ -22,49 +22,66 @@ class _IdeasState extends State<PersonPage> {
   final List<Idea> ideas = Helpers.getTempIdeasList1();
   final List<Event> events = Helpers.getTempEventsList();
 
+  TabController _tabController;
+  final List<Tab> myTabs = <Tab>[
+    Tab(text: 'Events'),
+    Tab(text: 'Ideas'),
+    Tab(text: 'Archive'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: myTabs.length);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('About'),
-      ),
-      body: Column(
+    var header = Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20),
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: 30.0),
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).unselectedWidgetColor,
-                    child: Text(Helpers.getInitials(widget.personName)),
-                    minRadius: 50,
-                  ),
-                ),
-                Text
-                (
-                  widget.personName,
-                  style: Theme.of(context).textTheme.headline,
-                ),
-              ],
+            padding: EdgeInsets.only(right: 30.0, left:50.0),
+            child: CircleAvatar(
+              backgroundColor: Theme.of(context).unselectedWidgetColor,
+              child: Text(Helpers.getInitials(widget.personName)),
+              minRadius: 50,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 10),
-            child: Text(
-              'Events',
-              style: Theme.of(context).textTheme.subhead,
-              textAlign: TextAlign.left,
-            ),
+          Text
+          (
+            widget.personName,
+            style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
           ),
-          
-          EventIdeasTreeWidget(events: events),
-
-        ]
+        ],
+      );
+      
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(200.0), // TODO way to compute height of subwidget?
+        child: AppBar(
+          flexibleSpace: SafeArea(
+            child: header,
+          ),
+          bottom: TabBar(
+            controller: _tabController,
+            tabs: myTabs,
+          ),
+        ),
       ),
-
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          Flex( direction: Axis.vertical, children: <Widget>[
+            EventIdeasTreeWidget(events: events)
+          ],),
+          Icon(Icons.card_giftcard),
+          Icon(Icons.history),
+        ],
+      ),
       floatingActionButton: FABSpeedDial(),
     );
   }
