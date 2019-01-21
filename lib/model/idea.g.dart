@@ -7,11 +7,16 @@ part of 'idea.dart';
 // **************************************************************************
 
 Idea _$IdeaFromJson(Map<String, dynamic> json) {
-  return Idea(json['title'] as String, json['description'] as String,
-      json['website'] as String, json['done'] as bool);
+  return Idea(
+      json['id'] as String,
+      json['title'] as String,
+      json['description'] as String,
+      json['website'] as String,
+      json['done'] as bool);
 }
 
 Map<String, dynamic> _$IdeaToJson(Idea instance) => <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'description': instance.description,
       'website': instance.website,

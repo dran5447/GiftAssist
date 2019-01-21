@@ -39,7 +39,7 @@ class PeopleList extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PersonPage(personName: people[index].name,)),
+              MaterialPageRoute(builder: (context) => PersonPage(person: people[index],)),
             );
           },
         );

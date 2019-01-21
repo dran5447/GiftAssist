@@ -11,12 +11,13 @@ part 'idea.g.dart';
 /// JSON serialization logic to be generated.
 @JsonSerializable()
 class Idea {
+  final String id;
   final String title;
   final String description;
   final String website;
   final bool done;
 
-  Idea(this.title, this.description, [this.website = '', this.done = false]);  
+  Idea(this.id, this.title, this.description, [this.website = '', this.done = false]);  
 
   /// A necessary factory constructor for creating a new Idea instance
   /// from a map. Pass the map to the generated `_$IdeaFromJson()` constructor.

@@ -8,7 +8,7 @@ import '../model/idea.dart';
 
 class DataStore{
   Map<String, Person> peopleCache = new Map<String, Person>();
-  //Map<String, Idea> ideaCache;
+  Map<String, Idea> ideaCache = new Map<String, Idea>();
   //Map<String, Event> eventCache;
 
 
@@ -37,6 +37,41 @@ class DataStore{
       return false;
     }
   }
+
+  //START: IDEA PERSISTANCE
+
+  Future<List<Idea>> retrieveIdeas() async{
+    try {
+      final file = await _localIdeaFile;
+
+      //TODO delete TEMP ideas
+      var tempjson = '[ {"id":"adsf324rfsdv", "title":"Temp Idea 1", "description":"desc 1"},{"id":"adsf345tg24rfsdv", "title":"Temp Idea 2", "description":"desc 2"}  ]';
+      file.writeAsStringSync(tempjson);
+
+
+      // Read the file
+      String contents = await file.readAsString();
+
+      print(contents);
+
+      var parsedJson = json.decode(contents); 
+      var result = parsedJson.map<Idea>((item) => (new Idea.fromJson(item))).toList();
+
+      //Update cached list
+      for(Idea i in result){
+        ideaCache[i.id] = i;
+      }
+
+      return result;
+    } catch (e) {
+        print('$e');
+        return null;
+    }
+  }
+
+
+
+  //START: PERSON PERSISTANCE
 
   Future<bool> persistPerson(Person person) async{
     final file = await _localPersonFile;
@@ -91,5 +126,7 @@ class DataStore{
         return null;
     }
   }
+
+  //END PERSON PERSISTANCE
 
 }

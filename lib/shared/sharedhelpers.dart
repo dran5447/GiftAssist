@@ -31,15 +31,15 @@ class Helpers{
 
   static List<Idea> getTempIdeasList1(){
     final List<Idea> ideas = [
-      new Idea('Something Cool', 'something cool', 'www.amazon.com', true),
+      new Idea('adsfadsf','Something Cool', 'something cool', 'www.amazon.com', true),
     ];
     return ideas;
   }
 
   static List<Idea> getTempIdeasList2(){
     final List<Idea> ideas = [
-      new Idea('Water', '', 'www.amazon.com'),
-      new Idea('Baseball', '', ''),
+      new Idea('adsfadsf','Water', '', 'www.amazon.com'),
+      new Idea('adsfadsf','Baseball', '', ''),
     ];
     return ideas;
   }

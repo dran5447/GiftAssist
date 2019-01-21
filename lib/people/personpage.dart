@@ -3,21 +3,23 @@ import '../shared/sharedhelpers.dart';
 import '../events/events_ideas_treeview.dart';
 import '../shared/floatingAdd.dart';
 import '../model/idea.dart';
+import '../model/person.dart';
 import '../model/event.dart';
+import '../ideas/ideaslistbuilder.dart';
 
 class PersonPage extends StatefulWidget {
-  final String personName;
+  final Person person;
   
-  PersonPage({Key key, this.personName}) : super(key: key);
+  PersonPage({Key key, this.person}) : super(key: key);
 
   @override
-  _IdeasState createState() => _IdeasState(personName: personName);
+  _IdeasState createState() => _IdeasState(person: person);
 }
 
 class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin {
-  final String personName;
+  final Person person;
   
-  _IdeasState({Key key, this.personName});
+  _IdeasState({Key key, this.person});
 
   final List<Idea> ideas = Helpers.getTempIdeasList1();
   final List<Event> events = Helpers.getTempEventsList();
@@ -47,18 +49,18 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
             padding: EdgeInsets.only(right: 30.0, left:50.0),
             child: CircleAvatar(
               backgroundColor: Theme.of(context).unselectedWidgetColor,
-              child: Text(Helpers.getInitials(widget.personName)),
+              child: Text(Helpers.getInitials(widget.person.name)),
               minRadius: 50,
             ),
           ),
           Text
           (
-            widget.personName,
+            widget.person.name,
             style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
           ),
         ],
       );
-      
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(200.0), // TODO way to compute height of subwidget?
@@ -78,7 +80,10 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
           Flex( direction: Axis.vertical, children: <Widget>[
             EventIdeasTreeWidget(events: events)
           ],),
-          Icon(Icons.card_giftcard),
+          Flex(direction: Axis.vertical, children: <Widget>[
+            IdeasListBuilder(person: person)
+          ],),
+         // Icon(Icons.card_giftcard),
           Icon(Icons.history),
         ],
       ),
