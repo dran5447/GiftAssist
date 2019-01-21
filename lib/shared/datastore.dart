@@ -69,6 +69,8 @@ class DataStore{
       // Read the file
       String contents = await file.readAsString();
 
+      print(contents);
+
       var parsedJson = json.decode(contents); 
       var result = parsedJson.map<Person>((item) => (new Person.fromJson(item))).toList();
 

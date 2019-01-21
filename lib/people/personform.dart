@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../shared/datastore.dart';
 import '../model/person.dart';
+import 'package:uuid/uuid.dart';
 
 class PersonForm extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class PersonForm extends StatefulWidget {
 }
 
 class PersonFormState extends State<PersonForm>{
+  final uuid = new Uuid();
   final _formKey = GlobalKey<FormState>();
   final DataStore storage = DataStore();
 
@@ -91,7 +93,7 @@ class PersonFormState extends State<PersonForm>{
                 onPressed: () {
                   if(_formKey.currentState.validate()){
                     //Send to DataStore for encoding
-                    var newPerson = new Person(nameFieldController.text); //TODO add other stuff later
+                    var newPerson = new Person(uuid.v1(), nameFieldController.text); //TODO add other stuff later
 
                     savePerson(newPerson).then((bool statusSuccess){
                       if (statusSuccess == true){

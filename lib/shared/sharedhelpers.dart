@@ -44,13 +44,6 @@ class Helpers{
     return ideas;
   }
 
-  static List<Person> getTempPeopleList(){
-    final List<Person> people = [
-      new Person('Mike', getTempEventsList(), getTempIdeasList1()),
-    ];
-    return people;
-  }
-
   // END TEMP HELPERS
 
   static String generateUUID(){
