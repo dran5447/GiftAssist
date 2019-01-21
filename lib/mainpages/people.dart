@@ -38,14 +38,6 @@ class PeopleState extends State<PeopleWidget>{
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10),
-            child: Text
-            (
-              'People',
-              style: Theme.of(context).textTheme.headline,
-            ),
-          ),
           FlatButton(
             color: Colors.red,
             textColor: Colors.white,
