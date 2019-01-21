@@ -14,15 +14,15 @@ enum EventType { BIRTHDAY, GRADUATION, WINTER_HOLIDAY, HOUSEWARMING, BABY_SHOWER
 class Event {
   final DateTime date;
   final String title;
+
   final String description;
-  
   final EventType eventType;
   final bool recurring;
   final List<Idea> ideas;
   bool isExpanded;
 
-  Event(this.date, this.title, this.description, [this.eventType = EventType.OTHER, this.ideas, this.recurring = false, this.isExpanded = false]){
-  }
+  Event(this.date, this.title, [this.description='', this.eventType = EventType.OTHER, 
+      this.ideas, this.recurring = false, this.isExpanded = false]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);
