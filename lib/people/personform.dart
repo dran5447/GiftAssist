@@ -14,16 +14,28 @@ class PersonForm extends StatefulWidget {
 class PersonFormState extends State<PersonForm>{
   final uuid = new Uuid();
   final _formKey = GlobalKey<FormState>();
-  final DataStore storage = DataStore();
+
+   void testData() async{
+    var x = await DBProvider.db.getAllPeople();
+    print(x);
+
+    DBProvider.db.listTables();
+   }
 
   TextEditingController nameFieldController = new TextEditingController();
 
-  Future<bool> savePerson(Person person) async{
-     return await storage.persistPerson(person); 
+  Future<int> savePerson(Person person) async{
+    return await DBProvider.db.savePerson(person);
   }
 
   @override 
   Widget build(BuildContext context) {
+
+ //   testData();
+
+
+
+
     return Form(
       autovalidate: true,
       key: _formKey,
@@ -95,12 +107,9 @@ class PersonFormState extends State<PersonForm>{
                     //Send to DataStore for encoding
                     var newPerson = new Person(uuid.v1(), nameFieldController.text); //TODO add other stuff later
 
-                    savePerson(newPerson).then((bool statusSuccess){
-                      if (statusSuccess == true){
+                    savePerson(newPerson).then((int status){
                         //Navigate back with message to display status
                         Navigator.pop(context, 'Saved.');
-                      }
-                      //TODO else show error message that it was unable to save                     
                     });                    
                   }
                   //if invalid, form validation will show error messages

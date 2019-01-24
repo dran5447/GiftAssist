@@ -12,20 +12,18 @@ class PeopleWidget extends StatefulWidget {
 }
 
 class PeopleState extends State<PeopleWidget>{
-  final DataStore storage = DataStore();
-
   PeopleState({Key key});
 
   static List<Person> people;
 
   Future<List<Person>> getPeople() async{
-    var result = await storage.retrievePeople();
+    var result = await DBProvider.db.getAllPeople();
     return result;
   }
 
   void tempDelete() async{
     setState(() {
-      storage.tempDeletePersonFileContents();
+      DBProvider.db.deleteAllPeople();
     });
   }
 

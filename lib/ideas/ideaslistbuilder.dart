@@ -10,8 +10,9 @@ class IdeasListBuilder extends StatelessWidget {
   IdeasListBuilder({Key key, this.person}) : super(key: key);
 
   Future<List<Idea>> getIdeas() async{
-    var store = new DataStore();
-    return store.retrieveIdeas();  //TODO change later
+ //   var store = new DataStore();
+    
+ //   return store.retrieveIdeas();  //TODO change later
 
     //return person.unassignedIdeas;
   }

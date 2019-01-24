@@ -1,132 +1,97 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../model/person.dart';
 import '../model/event.dart';
 import '../model/idea.dart';
 
-class DataStore{
-  Map<String, Person> peopleCache = new Map<String, Person>();
-  Map<String, Idea> ideaCache = new Map<String, Idea>();
-  //Map<String, Event> eventCache;
+//https://medium.com/flutter-community/using-sqlite-in-flutter-187c1a82e8b
 
 
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+class DBProvider {
+  DBProvider._();
+  static final DBProvider db = DBProvider._();
+
+  static Database _database;
+
+  Future<Database> get database async {
+    if (_database != null)
+    return _database;
+
+    // if _database is null, instantiate it
+    _database = await initDB();
+    return _database;
   }
 
-  Future<File> get _localPersonFile async {
-    final path = await _localPath;
-    return File('$path/person.json'); 
-  }
-  Future<File> get _localIdeaFile async {
-    final path = await _localPath;
-    return File('$path/idea.json'); 
-  }
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    var docPath = documentsDirectory.path;
+    String path = "$docPath/TestDB4.db";
+    return await openDatabase(path, version: 1, onOpen: (db) {
+    }, onCreate: (Database db, int version) async {
 
-  Future<bool> tempDeletePersonFileContents() async{
-    final file = await _localPersonFile;
-    try{
-      file.writeAsStringSync(""); 
-      return true;
-    }
-    catch(e){
-      print('$e');
-      return false;
-    }
-  }
+      //Create people table
+      await db.execute("CREATE TABLE Person ("
+          "id TEXT PRIMARY KEY,"
+          "name TEXT NOT NULL"
+          ")");
 
-  //START: IDEA PERSISTANCE
+      //Create ideas table
+      await db.execute("CREATE TABLE Idea ("
+          "id TEXT PRIMARY KEY,"
+          "title TEXT,"
+          "description TEXT,"
+          "website TEXT,"
+          "done BIT"
+          ")");
 
-  Future<List<Idea>> retrieveIdeas() async{
-    try {
-      final file = await _localIdeaFile;
+      //Create events table
+      await db.execute("CREATE TABLE Event ("
+          "id TEXT PRIMARY KEY,"
+          "date DATE,"
+          "title TEXT,"
+          "description TEXT,"
+          "recurring BIT,"
+          "isExpanded BIT"
+          ")");
 
-      //TODO delete TEMP ideas
-      var tempjson = '[ {"id":"adsf324rfsdv", "title":"Temp Idea 1", "description":"desc 1"},{"id":"adsf345tg24rfsdv", "title":"Temp Idea 2", "description":"desc 2"}  ]';
-      file.writeAsStringSync(tempjson);
 
+      //List tables
+      listTables();
 
-      // Read the file
-      String contents = await file.readAsString();
-
-      print(contents);
-
-      var parsedJson = json.decode(contents); 
-      var result = parsedJson.map<Idea>((item) => (new Idea.fromJson(item))).toList();
-
-      //Update cached list
-      for(Idea i in result){
-        ideaCache[i.id] = i;
-      }
-
-      return result;
-    } catch (e) {
-        print('$e');
-        return null;
-    }
+    });
   }
 
-
-
-  //START: PERSON PERSISTANCE
-
-  Future<bool> persistPerson(Person person) async{
-    final file = await _localPersonFile;
-
-     //Encode person to JSON format
-    String json = jsonEncode(person);
-
-    //Add to cached person list
-    peopleCache[person.id] = person;
-
-    //Get contents of file
-    try {
-      var contents = file.readAsStringSync();
-
-      //if first entry, add [ ] and content, else add data
-      if(contents == ""){
-        await file.writeAsString('[$json]');        
-      }
-      else{
-        var updated = contents.replaceFirst(']', ',$json]');
-        await file.writeAsString(updated);
-      }
-      return true;
-    }
-    catch(e){
-      print("$e");
-      return false;
-    }
-    return false;
+  listTables() async{
+    final db = await database;
+    print(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'" ));
   }
 
-  Future<List<Person>> retrievePeople() async{
-    try {
-      final file = await _localPersonFile;
-
-      // Read the file
-      String contents = await file.readAsString();
-
-      print(contents);
-
-      var parsedJson = json.decode(contents); 
-      var result = parsedJson.map<Person>((item) => (new Person.fromJson(item))).toList();
-
-      //Update cached list
-      for(Person p in result){
-        peopleCache[p.id] = p;
-      }
-
-      return result;
-    } catch (e) {
-        print('$e');
-        return null;
-    }
+  savePerson(Person newPerson) async {
+    final db = await database;
+    var res = await db.insert("Person", newPerson.toJson());
+    return res;
   }
 
-  //END PERSON PERSISTANCE
+  getAllPeople() async {
+    final db = await database;
+    var res = await db.query("Person");
+    List<Person> list =
+        res.isNotEmpty ? res.map((c) => Person.fromJson(c)).toList() : [];
+    return list;
+  }
+
+  deleteAllPeople() async {
+    final db = await database;
+    db.rawDelete("DELETE FROM Person");
+  }
+
+  deletePerson(int id) async {
+    final db = await database;
+    db.delete("Person", where: "id = ?", whereArgs: [id]);
+  }
+
 
 }

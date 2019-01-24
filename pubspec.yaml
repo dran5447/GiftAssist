@@ -16,9 +16,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  
   shared_preferences: "0.4.3"
   path_provider: "0.4.1"
   json_annotation: ^2.0.0
+  sqflite: any
 
   uuid: ^1.0.3
 
