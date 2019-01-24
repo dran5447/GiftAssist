@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../model/idea.dart';
+import '../model/person.dart';
+import 'package:uuid/uuid.dart';
+import '../shared/datastore.dart';
 
 class GiftIdeaForm extends StatefulWidget {
   @override
@@ -9,6 +13,17 @@ class GiftIdeaForm extends StatefulWidget {
 
 class GiftIdeaFormState extends State<GiftIdeaForm>{
   final _formKey = GlobalKey<FormState>();
+  final uuid = new Uuid();
+
+  Future<Person> TEMPGetPerson() async{
+    Person p  = await DBProvider.db.getFirstPerson(); 
+    return p;
+    // var x = await DBProvider.db.getAllPeople();
+    // return x[0];
+  }
+
+  TextEditingController nameFieldController = new TextEditingController();
+  TextEditingController websiteFieldController = new TextEditingController();
 
   @override 
   Widget build(BuildContext context) {
@@ -20,6 +35,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
           //TODO optional picture for idea
           //Name
           TextFormField(
+            controller: nameFieldController,
             decoration: const InputDecoration(
               icon: Icon(Icons.card_giftcard),
               hintText: 'What is your gift idea?',
@@ -33,6 +49,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
           ),
           //Optional website
           TextFormField(
+            controller: websiteFieldController,
             decoration: const InputDecoration(
               icon: Icon(Icons.public),
               hintText: 'URL for the gift idea',
@@ -102,7 +119,20 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                 child: Text('Create'),
                 onPressed: () {
                   if(_formKey.currentState.validate()){
-                    //TODO persist data
+                    var title = nameFieldController.text;
+                    var site = websiteFieldController.text;
+                     
+                    //TODO temporarily assign to certain properties for now
+                    var desc = "some description"; 
+
+                    TEMPGetPerson().then((Person value){
+                      var p = value;
+
+                      Idea i = new Idea(uuid.v1(), title, desc, site, 0, null, p.id);
+
+                      DBProvider.db.saveIdea(i);
+
+                    });                   
 
                     //Navigate back with message to display status
                     Navigator.pop(context, 'Saved.');

@@ -28,7 +28,7 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     var docPath = documentsDirectory.path;
-    String path = "$docPath/TestDB4.db";
+    String path = "$docPath/TestDB.db";
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
 
@@ -44,7 +44,9 @@ class DBProvider {
           "title TEXT,"
           "description TEXT,"
           "website TEXT,"
-          "done BIT"
+          "done BIT,"
+          "eventId TEXT,"
+          "uncategorizedPersonId TEXT"
           ")");
 
       //Create events table
@@ -54,7 +56,8 @@ class DBProvider {
           "title TEXT,"
           "description TEXT,"
           "recurring BIT,"
-          "isExpanded BIT"
+          "isExpanded BIT,"
+          "personId TEXT"
           ")");
 
 
@@ -79,8 +82,14 @@ class DBProvider {
     final db = await database;
     var res = await db.query("Person");
     List<Person> list =
-        res.isNotEmpty ? res.map((c) => Person.fromJson(c)).toList() : [];
+        res.isNotEmpty ? res.map<Person>((c) => Person.fromJson(c)).toList() : [];
     return list;
+  }
+
+  //TODO TEMP
+  getFirstPerson() async{
+    var people = await getAllPeople();
+    return people[0];
   }
 
   deleteAllPeople() async {
@@ -93,5 +102,19 @@ class DBProvider {
     db.delete("Person", where: "id = ?", whereArgs: [id]);
   }
 
+
+  saveIdea(Idea idea) async{
+    final db = await database;
+    var res = await db.insert("Idea", idea.toJson());
+    return res;
+  }
+
+  getIdeasForPerson(Person p) async{
+    final db = await database;
+    var res =await  db.query("Idea", where: "uncategorizedPersonId = ?", whereArgs: [p.id]);
+    List<Idea> list =
+        res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
+    return list;
+  }
 
 }

@@ -8,12 +8,9 @@ Event _$EventFromJson(Map<String, dynamic> json) {
       json['title'] as String,
       json['description'] as String,
       _$enumDecodeNullable(_$EventTypeEnumMap, json['eventType']),
-      (json['ideas'] as List)
-          ?.map((e) =>
-              e == null ? null : Idea.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      json['recurring'] as bool,
-      json['isExpanded'] as bool);
+      json['recurring'] as int,
+      json['isExpanded'] as bool,
+      json['personId'] as String);
 }
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
@@ -22,8 +19,8 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'description': instance.description,
       'eventType': _$EventTypeEnumMap[instance.eventType],
       'recurring': instance.recurring,
-      'ideas': instance.ideas,
-      'isExpanded': instance.isExpanded
+      'isExpanded': instance.isExpanded,
+      'personId': instance.personId
     };
 
 T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {

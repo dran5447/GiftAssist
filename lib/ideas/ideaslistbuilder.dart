@@ -10,11 +10,8 @@ class IdeasListBuilder extends StatelessWidget {
   IdeasListBuilder({Key key, this.person}) : super(key: key);
 
   Future<List<Idea>> getIdeas() async{
- //   var store = new DataStore();
-    
- //   return store.retrieveIdeas();  //TODO change later
-
-    //return person.unassignedIdeas;
+    var result = await DBProvider.db.getIdeasForPerson(person);
+    return result;
   }
 
   @override
@@ -25,7 +22,7 @@ class IdeasListBuilder extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 
-          return snapshot.hasData
+          return snapshot.hasData && snapshot.data.length > 0
               ? UncategorizedIdeasList(ideas: snapshot.data)
               : Padding(
                   padding: EdgeInsets.all(20.0),

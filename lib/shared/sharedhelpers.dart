@@ -19,19 +19,19 @@ class Helpers{
   // TEMPORARY HELPERS
   static List<Event> getTempEventsList(){
     final List<Event> events = [
-      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, getTempIdeasList2(), true),
-      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', EventType.FOOD_OUTING, getTempIdeasList1()),
-      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1',EventType.OTHER, getTempIdeasList2()),
-      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER, getTempIdeasList1()),
-      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.BIRTHDAY, getTempIdeasList1()),
-      new Event(new DateTime(2019, 2, 4), 'Valentines Day', '',EventType.VALENTINES, getTempIdeasList1()),
+      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, 1),
+      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', EventType.FOOD_OUTING),
+      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1',EventType.OTHER),
+      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER),
+      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.BIRTHDAY),
+      new Event(new DateTime(2019, 2, 4), 'Valentines Day', '',EventType.VALENTINES),
     ];
     return events;
   }
 
   static List<Idea> getTempIdeasList1(){
     final List<Idea> ideas = [
-      new Idea('adsfadsf','Something Cool', 'something cool', 'www.amazon.com', true),
+      new Idea('adsfadsf','Something Cool', 'something cool', 'www.amazon.com', 1),
     ];
     return ideas;
   }
@@ -126,7 +126,7 @@ class Helpers{
       if(e.date.difference(DateTime.now()).inDays >= 0){
         updated.add(e);
       }
-      else if(e.recurring){
+      else if(e.recurring == 1){
         //TODO add logic for recurring events
       }
     }

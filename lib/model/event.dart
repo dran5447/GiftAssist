@@ -17,12 +17,12 @@ class Event {
 
   final String description;
   final EventType eventType;
-  final bool recurring;
-  final List<Idea> ideas;
+  final int recurring;
   bool isExpanded;
+  final String personId;
 
   Event(this.date, this.title, [this.description='', this.eventType = EventType.OTHER, 
-      this.ideas, this.recurring = false, this.isExpanded = false]);
+      this.recurring = 0, this.isExpanded = false, this.personId]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);
@@ -47,16 +47,16 @@ class Event {
   }
 
   bool ideasCompleted(){
-    if(ideas.length > 0) {
-      for(int i=0; i<ideas.length; i++){
-        if(!ideas[i].done){
-          return false;
-        }
-      }
-      return true;
-    }
+  //   if(ideas.length > 0) {
+  //     for(int i=0; i<ideas.length; i++){
+  //       if(!ideas[i].done){
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   }
     return true;
-  }
+   }
 }
 
 

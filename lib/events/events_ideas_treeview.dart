@@ -22,7 +22,6 @@ class EventIdeasTreeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
     return new Expanded(
       child: ListView.builder(
         itemCount: events.length,
@@ -39,39 +38,39 @@ class EventIdeasTreeWidget extends StatelessWidget {
               '(' + Helpers.formatDate(item.date) + ')',
               style: Theme.of(context).textTheme.subtitle,
             ),
-            children: item.ideas.map((Idea idea) {
-              return Padding(
-                padding: EdgeInsets.only(left:50.0, right: 30.0),
-                child: GestureDetector(
-                  child: Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                          child: Text(
-                              idea.title,
-                              style: Theme.of(context).textTheme.body1,
-                          ),
-                        ),
-                        //TODO indicators or actions
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    //TODO do something meaningful with tapped idea
-                    showDialog(
-                      context: context,
-                      builder: (context){
-                        return new AlertDialog(
-                          content: Text('tapped idea'),
-                        );
-                      }
-                    );
-                  },
-                ),
-              );
-            }).toList(),
+            // children: item.ideas.map((Idea idea) {
+            //   return Padding(
+            //     padding: EdgeInsets.only(left:50.0, right: 30.0),
+            //     child: GestureDetector(
+            //       child: Card(
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: <Widget>[
+            //             Padding(
+            //               padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            //               child: Text(
+            //                   idea.title,
+            //                   style: Theme.of(context).textTheme.body1,
+            //               ),
+            //             ),
+            //             //TODO indicators or actions
+            //           ],
+            //         ),
+            //       ),
+            //       onTap: () {
+            //         //TODO do something meaningful with tapped idea
+            //         showDialog(
+            //           context: context,
+            //           builder: (context){
+            //             return new AlertDialog(
+            //               content: Text('tapped idea'),
+            //             );
+            //           }
+            //         );
+            //       },
+            //     ),
+            //   );
+            // }).toList(),
           );          
         },
       ),

@@ -12,7 +12,9 @@ Idea _$IdeaFromJson(Map<String, dynamic> json) {
       json['title'] as String,
       json['description'] as String,
       json['website'] as String,
-      json['done'] as bool);
+      json['done'] as int,
+      json['eventId'] as String,
+      json['uncategorizedPersonId'] as String);
 }
 
 Map<String, dynamic> _$IdeaToJson(Idea instance) => <String, dynamic>{
@@ -20,5 +22,7 @@ Map<String, dynamic> _$IdeaToJson(Idea instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'website': instance.website,
-      'done': instance.done
+      'done': instance.done,
+      'eventId': instance.eventId,
+      'uncategorizedPersonId': instance.uncategorizedPersonId
     };
