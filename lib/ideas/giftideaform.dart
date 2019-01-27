@@ -18,15 +18,40 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   Future<Person> TEMPGetPerson() async{
     Person p  = await DBProvider.db.getFirstPerson(); 
     return p;
-    // var x = await DBProvider.db.getAllPeople();
-    // return x[0];
+  }
+
+  getPeople() async{
+    var peeps = await DBProvider.db.getAllPeople();
+    
+    setState(() {
+      people = peeps;
+      selectedPerson = peeps[0];
+    });
   }
 
   TextEditingController nameFieldController = new TextEditingController();
   TextEditingController websiteFieldController = new TextEditingController();
+  Person selectedPerson = null;
+  List<Person> people = new List<Person>();
+  
+  Person getSelectedPersonByName(String searchName){
+      for(Person p in people){
+        if(p.name == searchName){
+          return p;
+        }
+      }
+      return null;
+    }
+
+  @override
+  void initState() {
+    super.initState();
+    this.getPeople();
+  }
 
   @override 
   Widget build(BuildContext context) {
+
     return Form(
       autovalidate: true,
       key: _formKey,
@@ -69,7 +94,47 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               }
             },
           ),
-       //   DropdownButtonFormField(items: ,decoration: ,)
+          new FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.color_lens),
+                  labelText: 'Person',
+                  errorText: state.hasError ? state.errorText : null,
+                ),
+                isEmpty: selectedPerson == null,
+                child: new DropdownButtonHideUnderline(
+                  child: new DropdownButton<String>(
+                    value: selectedPerson!= null ? selectedPerson.name : 
+                                (people != null && people.length>0 ? people[0].name : "Pick a Person"),
+                    isDense: true,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        selectedPerson = getSelectedPersonByName(newValue);
+                        state.didChange(newValue);
+                      });
+                    },
+                    items: people.length>0 ? 
+                              people.map((Person p) {
+                                return new DropdownMenuItem<String>(
+                                  value: p.name,
+                                  child: new Text(p.name),
+                                );
+                              }).toList() : 
+                              ['No people created'].map((String s) {
+                                return new DropdownMenuItem<String>(
+                                  value: s,
+                                  child: new Text(s),
+                                );
+                              }).toList(),
+                  ),
+                ),
+              );
+            },
+            validator: (val) {
+              return val != '' ? null : 'Please select a Person';
+            },
+          ),
 
           ButtonBar(
             alignment: MainAxisAlignment.center,
@@ -125,14 +190,9 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                     //TODO temporarily assign to certain properties for now
                     var desc = "some description"; 
 
-                    TEMPGetPerson().then((Person value){
-                      var p = value;
+                    Idea i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedPerson.id);
 
-                      Idea i = new Idea(uuid.v1(), title, desc, site, 0, null, p.id);
-
-                      DBProvider.db.saveIdea(i);
-
-                    });                   
+                    DBProvider.db.saveIdea(i);
 
                     //Navigate back with message to display status
                     Navigator.pop(context, 'Saved.');

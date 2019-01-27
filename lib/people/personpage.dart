@@ -23,7 +23,7 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
 
   final List<Idea> ideas = Helpers.getTempIdeasList1();
   final List<Event> events = Helpers.getTempEventsList();
-  
+
 
   TabController _tabController;
   final List<Tab> myTabs = <Tab>[
@@ -84,7 +84,6 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
           Flex(direction: Axis.vertical, children: <Widget>[
             IdeasListBuilder(person: person)
           ],),
-         // Icon(Icons.card_giftcard),
           Icon(Icons.history),
         ],
       ),
