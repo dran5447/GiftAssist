@@ -83,12 +83,12 @@ class Helpers{
     return eventGroups;
   }
 
-  static navigateToAddIdeaAndReturnResult(BuildContext context) async{
+  static navigateToAddIdeaAndReturnResult(BuildContext context, Person p) async{
     // Navigator.push returns a Future that will complete after we call
     // Navigator.pop on the following screen to feedback success or failure
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddGiftIdeaScreen()),
+      MaterialPageRoute(builder: (context) => AddGiftIdeaScreen(person: p)),
     );
 
     if (result != null){

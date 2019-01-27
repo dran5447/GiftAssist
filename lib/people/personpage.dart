@@ -87,7 +87,7 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
           Icon(Icons.history),
         ],
       ),
-      floatingActionButton: FABSpeedDial(),
+      floatingActionButton: FABSpeedDial(person: person),
     );
   }
 }

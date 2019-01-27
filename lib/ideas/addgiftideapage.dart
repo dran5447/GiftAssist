@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'giftideaform.dart';
 import '../shared/sharedhelpers.dart';
+import '../model/person.dart';
 
 class AddGiftIdeaScreen extends StatelessWidget {
+  final Person person;
+
+  AddGiftIdeaScreen({Key key, this.person}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +25,7 @@ class AddGiftIdeaScreen extends StatelessWidget {
           ),    
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: GiftIdeaForm()
+            child: GiftIdeaForm(person: person)
           ),
         ],
       ),

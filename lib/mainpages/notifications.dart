@@ -42,7 +42,7 @@ class NotificationState extends State<NotificationWidget>{
           // ),
         ],
       ),
-      floatingActionButton: FABAddIdea(),
+      floatingActionButton: FABAddIdea(person: null),
     );
   }
 }

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import '../shared/sharedhelpers.dart';
+import '../model/person.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class FABAddIdea extends StatelessWidget {
+  final Person person;
+
+  FABAddIdea({Key key, this.person}) : super(key: key);
+
  @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Helpers.navigateToAddIdeaAndReturnResult(context);
+        Helpers.navigateToAddIdeaAndReturnResult(context, person);
       }, backgroundColor: Helpers.secondary,
       tooltip: 'Quick Add Gift Idea',
       child: Align(
@@ -45,6 +50,10 @@ class FABAddPerson extends StatelessWidget {
 }
 
 class FABSpeedDial extends StatelessWidget {
+  final Person person;
+
+  FABSpeedDial({Key key, this.person}) : super(key: key);
+
   @override
   Widget build(BuildContext context){
     return SpeedDial(
@@ -63,7 +72,7 @@ class FABSpeedDial extends StatelessWidget {
               label: 'Add Gift Idea',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: () { 
-                Helpers.navigateToAddIdeaAndReturnResult(context);
+                Helpers.navigateToAddIdeaAndReturnResult(context, person);
               }
             ),
             SpeedDialChild(

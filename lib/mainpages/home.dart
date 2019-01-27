@@ -100,7 +100,7 @@ class HomeState extends State<HomeWidget>{
           ),
         ],
       ),
-      floatingActionButton: FABAddIdea(),
+      floatingActionButton: FABAddIdea(person: null),
     );
   }
 }

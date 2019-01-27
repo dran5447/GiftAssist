@@ -5,22 +5,34 @@ import 'package:uuid/uuid.dart';
 import '../shared/datastore.dart';
 
 class GiftIdeaForm extends StatefulWidget {
+  final Person person;
+  GiftIdeaForm({Key key, this.person}) : super(key: key);
+
   @override
   GiftIdeaFormState createState(){
-    return GiftIdeaFormState();
+    return GiftIdeaFormState(selectedPerson: person);
   }
 }
 
 class GiftIdeaFormState extends State<GiftIdeaForm>{
+  GiftIdeaFormState({Key key, this.selectedPerson});
+
   final _formKey = GlobalKey<FormState>();
   final uuid = new Uuid();
 
   getPeople() async{
     var peeps = await DBProvider.db.getAllPeople();
+
+    if(selectedPerson!=null){
+      people.add(selectedPerson);
+    }
     
     setState(() {
       people = peeps;
-      selectedPerson = peeps[0];
+
+      if(this.selectedPerson == null){
+        selectedPerson = peeps[0];
+      }
     });
   }
 
@@ -42,7 +54,6 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   void initState() {
     this.getPeople();
     super.initState();
-    
   }
 
   @override 
@@ -116,12 +127,19 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                                   child: new Text(p.name),
                                 );
                               }).toList() : 
-                              ['No people created'].map((String s) {
-                                return new DropdownMenuItem<String>(
-                                  value: s,
-                                  child: new Text(s),
-                                );
-                              }).toList(),
+                              selectedPerson != null ?
+                                [selectedPerson].map((Person p) {
+                                  return new DropdownMenuItem<String>(
+                                    value: p.name,
+                                    child: new Text(p.name),
+                                  );
+                                }).toList() :
+                                ['No people created'].map((String s) {
+                                  return new DropdownMenuItem<String>(
+                                    value: s,
+                                    child: new Text(s),
+                                  );
+                                }).toList(),
                   ),
                 ),
               );
