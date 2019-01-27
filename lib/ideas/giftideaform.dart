@@ -15,11 +15,6 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   final _formKey = GlobalKey<FormState>();
   final uuid = new Uuid();
 
-  Future<Person> TEMPGetPerson() async{
-    Person p  = await DBProvider.db.getFirstPerson(); 
-    return p;
-  }
-
   getPeople() async{
     var peeps = await DBProvider.db.getAllPeople();
     
@@ -31,27 +26,27 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
 
   TextEditingController nameFieldController = new TextEditingController();
   TextEditingController websiteFieldController = new TextEditingController();
-  Person selectedPerson = null;
+  Person selectedPerson;
   List<Person> people = new List<Person>();
   
   Person getSelectedPersonByName(String searchName){
-      for(Person p in people){
-        if(p.name == searchName){
-          return p;
-        }
+    for(Person p in people){
+      if(p.name == searchName){
+        return p;
       }
-      return null;
     }
+    return null;
+  }
 
   @override
   void initState() {
-    super.initState();
     this.getPeople();
+    super.initState();
+    
   }
 
   @override 
   Widget build(BuildContext context) {
-
     return Form(
       autovalidate: true,
       key: _formKey,
@@ -106,7 +101,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                 child: new DropdownButtonHideUnderline(
                   child: new DropdownButton<String>(
                     value: selectedPerson!= null ? selectedPerson.name : 
-                                (people != null && people.length>0 ? people[0].name : "Pick a Person"),
+                                (people != null && people.length>0 ? people[0].name : 'No people created'),
                     isDense: true,
                     onChanged: (String newValue) {
                       setState(() {
