@@ -156,7 +156,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               );
             },
             validator: (val) {
-              if(val == '' || val == null){
+              if(val == ''){
                 return 'Please select a Person';
               }
               if (val == emptyPeopleMessage){
