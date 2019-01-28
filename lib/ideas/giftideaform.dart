@@ -17,12 +17,19 @@ class GiftIdeaForm extends StatefulWidget {
 class GiftIdeaFormState extends State<GiftIdeaForm>{
   GiftIdeaFormState({Key key, this.selectedPerson});
 
+  final String emptyPeopleMessage = 'No people created';
   final _formKey = GlobalKey<FormState>();
   final uuid = new Uuid();
+  TextEditingController nameFieldController = new TextEditingController();
+  TextEditingController websiteFieldController = new TextEditingController();
+  Person selectedPerson;
+  List<Person> people = new List<Person>();
 
   getPeople() async{
     var peeps = await DBProvider.db.getAllPeople();
 
+    // If passed a selectedPerson from previous screen, add to the people list
+    // in order to pass first render without error
     if(selectedPerson!=null){
       people.add(selectedPerson);
     }
@@ -30,17 +37,17 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
     setState(() {
       people = peeps;
 
-      if(this.selectedPerson == null){
+      // If there are no initial selected people passed to the screen 
+      // use first person from database of People if it contains data
+      if(this.selectedPerson == null && peeps.length > 0){
         selectedPerson = peeps[0];
       }
     });
   }
-
-  TextEditingController nameFieldController = new TextEditingController();
-  TextEditingController websiteFieldController = new TextEditingController();
-  Person selectedPerson;
-  List<Person> people = new List<Person>();
   
+  // Translate selected name from dropdown to Person from db
+  // TODO this will fail if duplicate names exist (would need a
+  // workaround like adding birthday to the end)
   Person getSelectedPersonByName(String searchName){
     for(Person p in people){
       if(p.name == searchName){
@@ -64,6 +71,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
       child: Column(
         children: <Widget>[
           //TODO optional picture for idea
+          
           //Name
           TextFormField(
             controller: nameFieldController,
@@ -112,7 +120,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                 child: new DropdownButtonHideUnderline(
                   child: new DropdownButton<String>(
                     value: selectedPerson!= null ? selectedPerson.name : 
-                                (people != null && people.length>0 ? people[0].name : 'No people created'),
+                                (people != null && people.length>0 ? people[0].name : emptyPeopleMessage),
                     isDense: true,
                     onChanged: (String newValue) {
                       setState(() {
@@ -134,7 +142,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                                     child: new Text(p.name),
                                   );
                                 }).toList() :
-                                ['No people created'].map((String s) {
+                                [emptyPeopleMessage].map((String s) {
                                   return new DropdownMenuItem<String>(
                                     value: s,
                                     child: new Text(s),
@@ -145,7 +153,12 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               );
             },
             validator: (val) {
-              return val != '' ? null : 'Please select a Person';
+              if(val == '' || val == null){
+                return 'Please select a Person';
+              }
+              if (val == emptyPeopleMessage){
+                return 'Please create a Person first';
+              }
             },
           ),
 

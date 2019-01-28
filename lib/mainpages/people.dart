@@ -23,7 +23,7 @@ class PeopleState extends State<PeopleWidget>{
 
   void tempDelete() async{
     setState(() {
-      DBProvider.db.deleteAllPeople();
+      DBProvider.db.deleteAllData();
     });
   }
 
@@ -39,7 +39,7 @@ class PeopleState extends State<PeopleWidget>{
           FlatButton(
             color: Colors.red,
             textColor: Colors.white,
-            child: Text("TEMP DELETE"),
+            child: Text("TEMP DELETE ALL DATA"),
             onPressed: tempDelete,
           ),  //TODO delete later
           new Expanded(

@@ -72,6 +72,14 @@ class DBProvider {
     print(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'" ));
   }
 
+  deleteAllData() async {
+    final db = await database;
+    db.rawDelete("DELETE FROM Person");
+    db.rawDelete("DELETE FROM Idea");
+  }
+
+  /// START PEOPLE QUERIES
+
   savePerson(Person newPerson) async {
     final db = await database;
     var res = await db.insert("Person", newPerson.toJson());
@@ -86,22 +94,14 @@ class DBProvider {
     return list;
   }
 
-  //TODO TEMP
-  getFirstPerson() async{
-    var people = await getAllPeople();
-    return people[0];
-  }
-
-  deleteAllPeople() async {
-    final db = await database;
-    db.rawDelete("DELETE FROM Person");
-  }
-
   deletePerson(int id) async {
     final db = await database;
     db.delete("Person", where: "id = ?", whereArgs: [id]);
   }
 
+  ///END PEOPLE QUERIES
+
+  ///START IDEA QUERIES
 
   saveIdea(Idea idea) async{
     final db = await database;
@@ -116,5 +116,10 @@ class DBProvider {
         res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
     return list;
   }
+
+  ///END IDEA QUERIES
+
+  ///START EVENT QUERIES
+
 
 }
