@@ -11,14 +11,15 @@ class AddGiftIdeaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding:false,
       appBar: AppBar(
         backgroundColor: Helpers.secondary,
         title: Text('New Gift Idea'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 10),
+            padding: EdgeInsets.only(top: 20, bottom: 10, left: 20),
             child: Text(
               "Let's get some details about your new gift idea!",
             ),

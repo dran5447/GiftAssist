@@ -20,8 +20,10 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   final String emptyPeopleMessage = 'No people created';
   final _formKey = GlobalKey<FormState>();
   final uuid = new Uuid();
+  bool autovalidate = false;
   TextEditingController nameFieldController = new TextEditingController();
   TextEditingController websiteFieldController = new TextEditingController();
+  TextEditingController descFieldController = new TextEditingController();
   Person selectedPerson;
   List<Person> people = new List<Person>();
 
@@ -66,12 +68,12 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   @override 
   Widget build(BuildContext context) {
     return Form(
-      autovalidate: true,
       key: _formKey,
+      autovalidate: autovalidate,
       child: Column(
         children: <Widget>[
           //TODO optional picture for idea
-          
+
           //Name
           TextFormField(
             controller: nameFieldController,
@@ -108,12 +110,13 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               }
             },
           ),
+          //Person field
           new FormField<String>(
             builder: (FormFieldState<String> state) {
               return InputDecorator(
                 decoration: InputDecoration(
-                  icon: const Icon(Icons.color_lens),
-                  labelText: 'Person',
+                  icon: const Icon(Icons.person),
+                  labelText: 'Person *',
                   errorText: state.hasError ? state.errorText : null,
                 ),
                 isEmpty: selectedPerson == null,
@@ -161,6 +164,18 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               }
             },
           ),
+          //Description
+          TextFormField(
+            controller: descFieldController,
+            maxLines: 3,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.chat_bubble_outline),
+              hintText: 'Any additional details...',
+              labelText: 'Description',
+            ),
+            validator:  (value){ },
+          ),
+
 
           ButtonBar(
             alignment: MainAxisAlignment.center,
@@ -209,12 +224,15 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               RaisedButton(
                 child: Text('Create'),
                 onPressed: () {
+                  //Cue validation
+                  setState(() {
+                    autovalidate = true;
+                  });
+
                   if(_formKey.currentState.validate()){
                     var title = nameFieldController.text;
                     var site = websiteFieldController.text;
-                     
-                    //TODO temporarily assign to certain properties for now
-                    var desc = "some description"; 
+                    var desc = descFieldController.text; 
 
                     Idea i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedPerson.id);
 
