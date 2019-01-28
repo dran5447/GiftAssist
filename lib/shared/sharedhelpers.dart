@@ -4,6 +4,7 @@ import '../model/event.dart';
 import '../model/person.dart';
 import '../ideas/addgiftideapage.dart';
 import '../people/addpersonpage.dart';
+import '../events/addeventpage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -98,6 +99,23 @@ class Helpers{
     }
     
   }
+
+  static navigateToAddEventAndReturnResult(BuildContext context, Person p) async{
+    // Navigator.push returns a Future that will complete after we call
+    // Navigator.pop on the following screen to feedback success or failure
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddEventScreen(person: p)),
+    );
+
+    if (result != null){
+      // After result returned hide any previous snackbars and show result
+      Scaffold.of(context).removeCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
+    }
+    
+  }
+
 
   static navigateToAddPersonAndReturnResult(BuildContext context) async{
     // Navigator.push returns a Future that will complete after we call

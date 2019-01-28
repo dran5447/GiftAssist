@@ -122,4 +122,6 @@ class DBProvider {
   ///START EVENT QUERIES
 
 
+
+  ///END EVENT QUERIES
 }

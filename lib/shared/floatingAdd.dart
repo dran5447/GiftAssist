@@ -81,8 +81,7 @@ class FABSpeedDial extends StatelessWidget {
               label: 'Add Event',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: ()  { 
-                //TODO add event tap
-                print('SECOND CHILD');
+                Helpers.navigateToAddEventAndReturnResult(context, person);
               }
             ),
           ],
