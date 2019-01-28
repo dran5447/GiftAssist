@@ -3,6 +3,8 @@ import '../model/event.dart';
 import '../model/person.dart';
 import 'package:uuid/uuid.dart';
 import '../shared/datastore.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 
 class EventForm extends StatefulWidget {
   final Person person;
@@ -22,8 +24,10 @@ class EventFormState extends State<EventForm>{
   final uuid = new Uuid();
   bool autovalidate = false;
   TextEditingController titleFieldController = new TextEditingController();
+  TextEditingController dateFieldController = new TextEditingController();
   TextEditingController descFieldController = new TextEditingController();
   Person selectedPerson;
+  DateTime selectedDateTime;
   List<Person> people = new List<Person>();
 
     ///TODO date, eventtype, bool recurring
@@ -61,6 +65,16 @@ class EventFormState extends State<EventForm>{
     return null;
   }
 
+  DateTime convertToDate(String input) {
+    try 
+    {
+      var d = new DateFormat.yMd().parseStrict(input);
+      return d;
+    } catch (e) {
+      return null;
+    }    
+  }
+
   @override
   void initState() {
     this.getPeople();
@@ -69,6 +83,25 @@ class EventFormState extends State<EventForm>{
 
   @override 
   Widget build(BuildContext context) {
+    Future _chooseDate(BuildContext context, String initialDateString) async {
+      var now = new DateTime.now();
+      var initialDate = convertToDate(initialDateString) ?? now;
+      initialDate = (initialDate.year >= 1900 && initialDate.isBefore(now) ? initialDate : now);
+
+      var result = await showDatePicker(
+          context: context,
+          initialDate: initialDate,
+          firstDate: new DateTime(1900),
+          lastDate: new DateTime(now.year+5));
+
+      if (result == null) return;
+
+      setState(() {
+        dateFieldController.text = new DateFormat.yMd().format(result);
+        selectedDateTime = result;
+      });
+    }
+    
     return Form(
       key: _formKey,
       autovalidate: autovalidate,
@@ -90,7 +123,29 @@ class EventFormState extends State<EventForm>{
               }
             },
           ),
-          
+          //Date field
+          new Row(children: <Widget>[
+            new Expanded(
+              child: new TextFormField(
+              decoration: new InputDecoration(
+                icon: const Icon(Icons.calendar_today),
+                hintText: 'Enter event date or open picker',
+                labelText: 'Date',
+              ),
+              controller: dateFieldController,
+              keyboardType: TextInputType.datetime,
+            )),
+            new IconButton(
+                icon: Padding(
+                  child: new Icon(Icons.event, size: 30),
+                  padding: EdgeInsets.only(top: 10, left: 0),
+                ),
+                tooltip: 'Choose date',
+                onPressed: (() {
+                  _chooseDate(context, dateFieldController.text);
+                }),
+              ), 
+          ]),
           //Person field
           new FormField<String>(
             builder: (FormFieldState<String> state) {
@@ -211,16 +266,20 @@ class EventFormState extends State<EventForm>{
                   });
 
                   if(_formKey.currentState.validate()){
-                    var date = null; //TODO
+                    var date = selectedDateTime.millisecondsSinceEpoch;
                     var title = titleFieldController.text;
                     var desc = descFieldController.text; 
-                    var eventType = null; //TODO
+
+                    var eventType = 0; //TODO
                     var recurring = 0; //TODO
 
-                    Event e = new Event(date, title, desc, eventType, recurring, false, selectedPerson.id);
+                    Event e = new Event(date, title, desc, eventType, recurring, 0, selectedPerson.id);
 
-                    //TODO save event
-           //         DBProvider.db.saveEvent(i);
+                    //Save event
+                    DBProvider.db.saveEvent(e);
+
+                    //TODO temp, remove
+                    DBProvider.db.getEventsForPerson(selectedPerson);
 
                     //Navigate back with message to display status
                     Navigator.pop(context, 'Saved.');

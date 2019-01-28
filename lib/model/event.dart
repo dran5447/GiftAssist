@@ -4,47 +4,24 @@ import 'idea.dart';
 
 part 'event.g.dart';
 
-enum EventType { BIRTHDAY, GRADUATION, WINTER_HOLIDAY, HOUSEWARMING, BABY_SHOWER, 
-                  VALENTINES, PARTY, PROMOTION, FOOD_OUTING, WEDDING, ANNIVERSARY, OTHER}
-
-
 //JSON serialization info from https://flutter.io/docs/development/data-and-backend/json
 
 @JsonSerializable()
 class Event {
-  final DateTime date;
+  final int dateInMilli;  //in millisSinceEpoch
   final String title;
 
   final String description;
-  final EventType eventType;
+  final int eventTypeId;
   final int recurring;
-  bool isExpanded;
+  int isExpanded;
   final String personId;
 
-  Event(this.date, this.title, [this.description='', this.eventType = EventType.OTHER, 
-      this.recurring = 0, this.isExpanded = false, this.personId]);
+  Event(this.dateInMilli, this.title, [this.description='', this.eventTypeId = 0, 
+      this.recurring = 0, this.isExpanded = 0, this.personId]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);
-
-  final Map<EventType, IconData> eventIconMap = {
-    EventType.BIRTHDAY: (Icons.cake), 
-    EventType.GRADUATION: (Icons.school),
-    EventType.WINTER_HOLIDAY: (Icons.ac_unit),
-    EventType.HOUSEWARMING: (Icons.home),
-    EventType.BABY_SHOWER: (Icons.child_friendly), 
-    EventType.VALENTINES: (Icons.favorite_border),
-    EventType.PARTY: (Icons.people),
-    EventType.PROMOTION: (Icons.work),
-    EventType.FOOD_OUTING: (Icons.restaurant),
-    EventType.WEDDING: (Icons.all_inclusive),
-    EventType.ANNIVERSARY: (Icons.favorite),
-    EventType.OTHER: (Icons.card_giftcard),
-  };
-
-  IconData getIcon(){
-    return eventIconMap[this.eventType];
-  }
 
   bool ideasCompleted(){
   //   if(ideas.length > 0) {
@@ -58,7 +35,6 @@ class Event {
     return true;
    }
 }
-
 
 class EventDateGroup{
   final String formattedDate;

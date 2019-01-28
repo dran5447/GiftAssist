@@ -19,33 +19,24 @@ class Helpers{
 
   // TEMPORARY HELPERS
   static List<Event> getTempEventsList(){
-    final List<Event> events = [
-      new Event(new DateTime(2018, 12, 25), 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, 1),
-      new Event(new DateTime(2018, 12, 26), 'Boxing Day', 'monies', EventType.FOOD_OUTING),
-      new Event(new DateTime(2018, 12, 31), 'New Years Eve', '3-2-1',EventType.OTHER),
-      new Event(new DateTime(2019, 1, 1), 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER),
-      new Event(new DateTime(2019, 1, 3), 'Mike bday', 'woop woop',EventType.BIRTHDAY),
-      new Event(new DateTime(2019, 2, 4), 'Valentines Day', '',EventType.VALENTINES),
-    ];
-    return events;
+    // final List<Event> events = [
+    //   new Event(new DateTime(2018, 12, 25).millisecondsSinceEpoch, 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, 1),
+    //   new Event(new DateTime(2018, 12, 26).millisecondsSinceEpoch, 'Boxing Day', 'monies', EventType.FOOD_OUTING),
+    //   new Event(new DateTime(2018, 12, 31).millisecondsSinceEpoch, 'New Years Eve', '3-2-1',EventType.OTHER),
+    //   new Event(new DateTime(2019, 1, 1).millisecondsSinceEpoch, 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER),
+    //   new Event(new DateTime(2019, 1, 3).millisecondsSinceEpoch, 'Mike bday', 'woop woop',EventType.BIRTHDAY),
+    //   new Event(new DateTime(2019, 2, 4).millisecondsSinceEpoch, 'Valentines Day', '',EventType.VALENTINES),
+    // ];
+    // return events;
+    return new List<Event>();
   }
-
-  static List<Idea> getTempIdeasList1(){
-    final List<Idea> ideas = [
-      new Idea('adsfadsf','Something Cool', 'something cool', 'www.amazon.com', 1),
-    ];
-    return ideas;
-  }
-
-  static List<Idea> getTempIdeasList2(){
-    final List<Idea> ideas = [
-      new Idea('adsfadsf','Water', '', 'www.amazon.com'),
-      new Idea('adsfadsf','Baseball', '', ''),
-    ];
-    return ideas;
-  }
-
+  
   // END TEMP HELPERS
+
+  static DateTime getEventDateTime(Event e){
+    DateTime date = new DateTime.fromMillisecondsSinceEpoch(e.dateInMilli);
+    return date;
+  }
 
   static String generateUUID(){
     var length = 20;
@@ -66,10 +57,10 @@ class Helpers{
     List<Event> currentDateEventList = [];
     currentDateEventList.add(events[0]);
     for(int i=1; i<events.length; i++){
-      if(events[i].date != events[i-1].date){
+      if(events[i].dateInMilli != events[i-1].dateInMilli){
         List<Event>  temp = new List.from(currentDateEventList);
         // currentDateEventList;
-        eventGroups.add(new EventDateGroup(Helpers.formatDate(currentDateEventList[0].date), temp));
+        eventGroups.add(new EventDateGroup(Helpers.formatDate(getEventDateTime(currentDateEventList[0])), temp));
         currentDateEventList.clear();
         currentDateEventList.add(events[i]);
       }
@@ -78,7 +69,7 @@ class Helpers{
       }
       if(i == events.length-1){
         var temp = currentDateEventList;
-        eventGroups.add(new EventDateGroup(Helpers.formatDate(events[i].date), temp));
+        eventGroups.add(new EventDateGroup(Helpers.formatDate(getEventDateTime(events[i])), temp));
       }
     }
     return eventGroups;
@@ -141,7 +132,8 @@ class Helpers{
     List<Event> updated = new List<Event>();
 
     for(Event e in events){
-      if(e.date.difference(DateTime.now()).inDays >= 0){
+      var eDate = getEventDateTime(e);
+      if(eDate.difference(DateTime.now()).inDays >= 0){
         updated.add(e);
       }
       else if(e.recurring == 1){

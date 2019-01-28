@@ -21,7 +21,6 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
   
   _IdeasState({Key key, this.person});
 
-  final List<Idea> ideas = Helpers.getTempIdeasList1();
   final List<Event> events = Helpers.getTempEventsList();
 
 
@@ -79,7 +78,7 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
         controller: _tabController,
         children: [
           Flex( direction: Axis.vertical, children: <Widget>[
-            EventIdeasTreeWidget(events: events)
+            EventIdeasTreeWidget(person: person)
           ],),
           Flex(direction: Axis.vertical, children: <Widget>[
             IdeasListBuilder(person: person)

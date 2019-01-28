@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -52,19 +53,49 @@ class DBProvider {
       //Create events table
       await db.execute("CREATE TABLE Event ("
           "id TEXT PRIMARY KEY,"
-          "date DATE,"
+          "dateInMilli INTEGER,"
           "title TEXT,"
           "description TEXT,"
+          "eventTypeId INTEGER,"
           "recurring BIT,"
           "isExpanded BIT,"
           "personId TEXT"
           ")");
 
+      //Create event type table
+      await db.execute("CREATE TABLE EventType ("
+          "id TEXT PRIMARY KEY,"
+          "name TEXT,"
+          "iconDataCodePoint INTEGER"
+          ")");
+
+      //Populate event types
+      createEventTypes();
 
       //List tables
       listTables();
 
     });
+  }
+
+  createEventTypes() async{
+    final db = await database;
+
+    //Insert event types in batch
+    var batch = db.batch();
+    batch.insert('EventType', {'id': '0', 'name':'Birthday', 'iconDataCodePoint':Icons.cake.hashCode});
+    batch.insert('EventType', {'id': '1', 'name':'Graduation', 'iconDataCodePoint':Icons.school.hashCode});
+    batch.insert('EventType', {'id': '2', 'name':'Winter Holiday', 'iconDataCodePoint':Icons.ac_unit.hashCode});
+    batch.insert('EventType', {'id': '3', 'name':'Housewarming', 'iconDataCodePoint':Icons.home.hashCode});
+    batch.insert('EventType', {'id': '4', 'name':'Baby Shower', 'iconDataCodePoint':Icons.child_friendly.hashCode});
+    batch.insert('EventType', {'id': '5', 'name':'Valentines', 'iconDataCodePoint':Icons.favorite_border.hashCode});
+    batch.insert('EventType', {'id': '6', 'name':'Party', 'iconDataCodePoint':Icons.people.hashCode});
+    batch.insert('EventType', {'id': '7', 'name':'Food', 'iconDataCodePoint':Icons.restaurant.hashCode});
+    batch.insert('EventType', {'id': '8', 'name':'Promotion', 'iconDataCodePoint':Icons.work.hashCode});
+    batch.insert('EventType', {'id': '9', 'name':'Wedding', 'iconDataCodePoint':Icons.all_inclusive.hashCode});
+    batch.insert('EventType', {'id': '10', 'name':'Anniversary', 'iconDataCodePoint':Icons.favorite.hashCode});
+    batch.insert('EventType', {'id': '11', 'name':'Other', 'iconDataCodePoint':Icons.card_giftcard.hashCode});
+    var results = await batch.commit();
   }
 
   listTables() async{
@@ -76,6 +107,8 @@ class DBProvider {
     final db = await database;
     db.rawDelete("DELETE FROM Person");
     db.rawDelete("DELETE FROM Idea");
+    db.rawDelete("DELETE FROM Event");
+
   }
 
   /// START PEOPLE QUERIES
@@ -121,7 +154,25 @@ class DBProvider {
 
   ///START EVENT QUERIES
 
+  saveEvent(Event e) async{
+    final db = await database;
+    var res = await db.insert("Event", e.toJson());
+    return res;
+  }
 
+  getEventsForPerson(Person p) async{
+    final db = await database;
+    var res =await  db.query("Event", where: "personId = ?", whereArgs: [p.id]);
+    List<Event> list =
+        res.isNotEmpty ? res.map<Event>((c) => Event.fromJson(c)).toList() : [];
+    return list;
+  }
+
+  getEventTypeForEvent(Event e) async{
+    final db = await database;
+    var res = await  db.query("EventType", where: "id = ?", whereArgs: [e.eventTypeId]);
+    return res;
+  }
 
   ///END EVENT QUERIES
 }
