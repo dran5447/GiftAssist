@@ -16,23 +16,6 @@ class Helpers{
   static Color neutralDark = Color.fromARGB(255, 56, 63, 81);
   static Color neutralLight = Color.fromARGB(255, 196, 125, 135);
 
-
-  // TEMPORARY HELPERS
-  static List<Event> getTempEventsList(){
-    // final List<Event> events = [
-    //   new Event(new DateTime(2018, 12, 25).millisecondsSinceEpoch, 'Christmas', 'ho ho ho', EventType.WINTER_HOLIDAY, 1),
-    //   new Event(new DateTime(2018, 12, 26).millisecondsSinceEpoch, 'Boxing Day', 'monies', EventType.FOOD_OUTING),
-    //   new Event(new DateTime(2018, 12, 31).millisecondsSinceEpoch, 'New Years Eve', '3-2-1',EventType.OTHER),
-    //   new Event(new DateTime(2019, 1, 1).millisecondsSinceEpoch, 'New Years Day', 'new year new you, dont fuck oop',EventType.OTHER),
-    //   new Event(new DateTime(2019, 1, 3).millisecondsSinceEpoch, 'Mike bday', 'woop woop',EventType.BIRTHDAY),
-    //   new Event(new DateTime(2019, 2, 4).millisecondsSinceEpoch, 'Valentines Day', '',EventType.VALENTINES),
-    // ];
-    // return events;
-    return new List<Event>();
-  }
-  
-  // END TEMP HELPERS
-
   static DateTime getEventDateTime(Event e){
     DateTime date = new DateTime.fromMillisecondsSinceEpoch(e.dateInMilli);
     return date;
@@ -111,9 +94,6 @@ class Helpers{
   static navigateToAddPersonAndReturnResult(BuildContext context) async{
     // Navigator.push returns a Future that will complete after we call
     // Navigator.pop on the following screen to feedback success or failure
-
-
-    //TODO add quick add person page
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddPersonScreen()),

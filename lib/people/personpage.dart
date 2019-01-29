@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../shared/sharedhelpers.dart';
 import '../events/events_ideas_treeview.dart';
 import '../shared/floatingAdd.dart';
-import '../model/idea.dart';
 import '../model/person.dart';
-import '../model/event.dart';
 import '../ideas/ideaslistbuilder.dart';
 
 class PersonPage extends StatefulWidget {
@@ -20,9 +18,6 @@ class _IdeasState extends State<PersonPage> with SingleTickerProviderStateMixin 
   final Person person;
   
   _IdeasState({Key key, this.person});
-
-  final List<Event> events = Helpers.getTempEventsList();
-
 
   TabController _tabController;
   final List<Tab> myTabs = <Tab>[
