@@ -130,7 +130,7 @@ class EventFormState extends State<EventForm>{
               decoration: new InputDecoration(
                 icon: const Icon(Icons.calendar_today),
                 hintText: 'Enter event date or open picker',
-                labelText: 'Date',
+                labelText: 'Date *',
               ),
               controller: dateFieldController,
               keyboardType: TextInputType.datetime,
