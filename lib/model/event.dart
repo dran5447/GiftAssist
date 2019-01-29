@@ -13,7 +13,7 @@ class Event {
 
   final String description;
   final int eventTypeId;
-  final int recurring;
+  final int recurring; //false = 0
   int isExpanded;
   final String personId;
 

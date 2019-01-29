@@ -28,6 +28,7 @@ class EventFormState extends State<EventForm>{
   TextEditingController descFieldController = new TextEditingController();
   Person selectedPerson;
   DateTime selectedDateTime;
+  bool recurringBool = false;
   List<Person> people = new List<Person>();
 
     ///TODO date, eventtype, bool recurring
@@ -211,7 +212,25 @@ class EventFormState extends State<EventForm>{
             ),
             validator:  (value){ },
           ),
-
+          //Recurring field
+          new Row(
+            children: <Widget>[
+              Icon(Icons.history),
+              Padding(
+                padding: EdgeInsets.only(right: 60, left: 15),
+                child: Text('Yearly Recurrence'),
+              ),
+              Switch.adaptive(
+                value: recurringBool,
+                activeColor: Colors.green, 
+                onChanged: (bool val){
+                  setState(() {
+                    recurringBool = val;
+                  });
+                },
+              ),
+            ]
+          ),
 
           ButtonBar(
             alignment: MainAxisAlignment.center,
@@ -269,17 +288,15 @@ class EventFormState extends State<EventForm>{
                     var date = selectedDateTime.millisecondsSinceEpoch;
                     var title = titleFieldController.text;
                     var desc = descFieldController.text; 
+                    var recurring = recurringBool ? 1 : 0; //true = 1, false = 0
 
                     var eventType = 0; //TODO
-                    var recurring = 0; //TODO
+                    
 
                     Event e = new Event(date, title, desc, eventType, recurring, 0, selectedPerson.id);
 
                     //Save event
                     DBProvider.db.saveEvent(e);
-
-                    //TODO temp, remove
-                    DBProvider.db.getEventsForPerson(selectedPerson);
 
                     //Navigate back with message to display status
                     Navigator.pop(context, 'Saved.');
