@@ -21,7 +21,7 @@ class EventSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    this.getEventType();
+ //   var x =  this.getEventType();
 
     return Card(
       elevation: 4.0,
@@ -29,7 +29,7 @@ class EventSummaryCard extends StatelessWidget {
         children: <Widget>[
           ListTile(
             contentPadding: EdgeInsets.all(20.0),
-            leading: Icon(IconData(eventType.iconDataCodePoint), size:50.0),
+      //      leading: Icon(IconData(eventType.iconDataCodePoint), size:50.0), //TODO fix
             title: Text(event.title),
             subtitle: Text(Helpers.formatDate(Helpers.getEventDateTime(event))),
             trailing: EventStatusSnippet(event),

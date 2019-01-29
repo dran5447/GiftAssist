@@ -18,8 +18,11 @@ class HomeState extends State<HomeWidget>{
 
   HomeState({Key key});
 
-  //TODO pass in a limited number of upcoming global events
-  var events = Helpers.getTempEventsList();
+  //TODO get a limited number of upcoming global events
+  Future<List<Event>> getEvents() async{
+    var result = await DBProvider.db.getAllEvents();
+    return result;
+  }
 
   @override 
   Widget build(BuildContext context) {
@@ -38,65 +41,96 @@ class HomeState extends State<HomeWidget>{
               textAlign: TextAlign.left,
             ),
           ),
-          //TODO notification/announcements area
           new Expanded(
-            child: ListView.builder(
-              physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: events.length,
-                itemBuilder: (context, j) {
-                  return new Dismissible(
-                    key: new Key(Helpers.generateUUID()),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      color: Colors.green.shade300, 
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end, 
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(right: 30.0),
-                            child:Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(Icons.check),
-                                Text('Mark Done')
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onDismissed: (DismissDirection dismissDir){
-                      //TODO handle event data changes
+            child: FutureBuilder<List<Event>>(
+              future: getEvents(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) print(snapshot.error);
+            
+                return snapshot.hasData && snapshot.data.length > 0
+                    ?   ListView.builder(
+                          physics: ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, j) {
+                            return new Dismissible(
+                              key: new Key(Helpers.generateUUID()),
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                color: Colors.green.shade300, 
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end, 
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 30.0),
+                                      child:Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(Icons.check),
+                                          Text('Mark Done')
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onDismissed: (DismissDirection dismissDir){
+                                //TODO handle event data changes
 
-                      Event tempDismissedEvent =events[j];
-                      setState(() {
-                        events.remove(tempDismissedEvent);
-                      });
+                                Event tempDismissedEvent =snapshot.data[j];
+                                setState(() {
+                                  snapshot.data.remove(tempDismissedEvent);
+                                });
 
-                      //Show Undo snackbar option
-                      Scaffold.of(context).removeCurrentSnackBar();
-                      var snackbar = SnackBar(
-                        content: Text("Marked as done."),
-                        action: SnackBarAction(
-                          textColor: Colors.redAccent,
-                          label: 'Undo',
-                          onPressed: () {
-                              setState(() {
-                                events.insert(j,tempDismissedEvent);
-                              });
-                          },
-                        ),
+                                //Show Undo snackbar option
+                                Scaffold.of(context).removeCurrentSnackBar();
+                                var snackbar = SnackBar(
+                                  content: Text("Marked as done."),
+                                  action: SnackBarAction(
+                                    textColor: Colors.redAccent,
+                                    label: 'Undo',
+                                    onPressed: () {
+                                        setState(() {
+                                          snapshot.data.insert(j,tempDismissedEvent);
+                                        });
+                                    },
+                                  ),
+                                );
+                                Scaffold.of(context).showSnackBar(snackbar);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: EventSummaryCard(snapshot.data[j]),
+                              ),
+                            );
+                          }
+                        )
+                    // ?  ListView.builder(
+                    //       itemCount: snapshot.data.length,
+                    //       itemBuilder: (context, index) {
+                    //         var item = snapshot.data[index];
+                    //         return new ExpansionTile(
+                    //           initiallyExpanded: item.isExpanded==1,
+                    //           key: PageStorageKey<Event>(item),
+                    //           leading: Text(
+                    //             item.title,
+                    //             style: Theme.of(context).textTheme.title,
+                    //           ),
+                    //           title: Text(
+                    //             '(' + Helpers.formatDate(Helpers.getEventDateTime(item)) + ')',
+                    //             style: Theme.of(context).textTheme.subtitle,
+                    //           ),
+                    //         );          
+                    //       },
+                    //     )
+                    : Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child:Center(
+                            child: Text("None addded. Create a Person and then add Events.")
+                        )
                       );
-                      Scaffold.of(context).showSnackBar(snackbar);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: EventSummaryCard(events[j]),
-                    ),
-                  );
-                }
-              ),
+              }
+            )
           ),
         ],
       ),

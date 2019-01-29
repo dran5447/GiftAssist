@@ -168,6 +168,14 @@ class DBProvider {
     return list;
   }
 
+  getAllEvents() async{
+    final db = await database;
+    var res = await db.query("Event");
+    List<Event> list =
+        res.isNotEmpty ? res.map<Event>((c) => Event.fromJson(c)).toList() : [];
+    return list;
+  }
+
   getEventTypeForEvent(Event e) async{
     final db = await database;
     var res = await  db.query("EventType", where: "id = ?", whereArgs: [e.eventTypeId]);
