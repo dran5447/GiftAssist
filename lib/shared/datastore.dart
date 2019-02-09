@@ -29,7 +29,7 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     var docPath = documentsDirectory.path;
-    String path = "$docPath/TestDB1.db";   //TODO later fix this
+    String path = "$docPath/TestDB2.db";   //TODO later fix this
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
 

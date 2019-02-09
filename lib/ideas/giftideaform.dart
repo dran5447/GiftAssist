@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/idea.dart';
 import '../model/person.dart';
+import '../model/event.dart';
 import 'package:uuid/uuid.dart';
 import '../shared/datastore.dart';
 
@@ -18,6 +19,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   GiftIdeaFormState({Key key, this.selectedPerson});
 
   final String emptyPeopleMessage = 'No people created';
+  final String emptyEventsMessage = 'No events created';
   final _formKey = GlobalKey<FormState>();
   final uuid = new Uuid();
   bool autovalidate = false;
@@ -26,6 +28,8 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
   TextEditingController descFieldController = new TextEditingController();
   Person selectedPerson;
   List<Person> people = new List<Person>();
+  Event selectedEvent;
+  List<Event> events = new List<Event>();
 
   getPeople() async{
     var peeps = await DBProvider.db.getAllPeople();
@@ -46,6 +50,20 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
       }
     });
   }
+
+  getEvents() async{
+    var events;
+
+    if(selectedPerson != null){
+      events = await DBProvider.db.getEventsForPerson(selectedPerson);
+
+      setState(() {
+        this.events = events;
+        
+        selectedEvent = events[0];
+      });
+    }
+  }
   
   // Translate selected name from dropdown to Person from db
   // TODO this will fail if duplicate names exist (would need a
@@ -59,9 +77,19 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
     return null;
   }
 
+  Event getSelectedEventByName(String searchName){
+    for(Event e in events){
+      if(e.title == searchName){
+        return e;
+      }
+    }
+    return null;
+  }
+
   @override
   void initState() {
     this.getPeople();
+    this.getEvents();
     super.initState();
   }
 
@@ -117,6 +145,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                 decoration: InputDecoration(
                   icon: const Icon(Icons.person),
                   labelText: 'Person *',
+                  hintText: 'Who is this idea for?',
                   errorText: state.hasError ? state.errorText : null,
                 ),
                 isEmpty: selectedPerson == null,
@@ -128,6 +157,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                     onChanged: (String newValue) {
                       setState(() {
                         selectedPerson = getSelectedPersonByName(newValue);
+                        this.getEvents(); //Reload events for that person
                         state.didChange(newValue);
                       });
                     },
@@ -159,10 +189,61 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               if(val == ''){
                 return 'Please select a Person';
               }
-              if (val == emptyPeopleMessage || val ==null){
+              if (val == emptyPeopleMessage){
+                return 'Please create a Person first';
+              }
+              if (val == null && selectedPerson == null){
                 return 'Please create a Person first';
               }
             },
+          ),
+          //Event field
+          new FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.calendar_today),
+                  labelText: 'Event',
+                  hintText: 'Optional event to associate with',
+                  errorText: state.hasError ? state.errorText : null,
+                ),
+                isEmpty: selectedEvent == null,
+                child: new DropdownButtonHideUnderline(
+                  child: new DropdownButton<String>(
+                    value: selectedEvent!= null ? selectedEvent.title : 
+                                (events != null && events.length>0 ? events[0].title : emptyEventsMessage),
+                    isDense: true,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        selectedEvent = getSelectedEventByName(newValue);
+                        state.didChange(newValue);
+                      });
+                    },
+                    items: events.length>0 ? 
+                              events.map((Event e) {
+                                return new DropdownMenuItem<String>(
+                                  value: e.title,
+                                  child: new Text(e.title),
+                                );
+                              }).toList() : 
+                              selectedEvent != null ?
+                                [selectedEvent].map((Event e) {
+                                  return new DropdownMenuItem<String>(
+                                    value: e.title,
+                                    child: new Text(e.title),
+                                  );
+                                }).toList() :
+                                [emptyEventsMessage].map((String s) {
+                                  return new DropdownMenuItem<String>(
+                                    value: s,
+                                    child: new Text(s),
+                                  );
+                                }).toList(),
+                  ),
+                ),
+              );
+            },
+            validator: (val) {  },
           ),
           //Description
           TextFormField(
@@ -175,7 +256,6 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
             ),
             validator:  (value){ },
           ),
-
 
           ButtonBar(
             alignment: MainAxisAlignment.center,
@@ -234,7 +314,12 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                     var site = websiteFieldController.text;
                     var desc = descFieldController.text; 
 
-                    Idea i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedPerson.id);
+                    Idea i;
+                    if(selectedEvent != null){
+                      i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedEvent.id);
+                    } else{  //save as an uncategorized idea for the selected person
+                      i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedPerson.id);
+                    }
 
                     DBProvider.db.saveIdea(i);
 

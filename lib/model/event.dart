@@ -8,6 +8,7 @@ part 'event.g.dart';
 
 @JsonSerializable()
 class Event {
+  final String id;
   final int dateInMilli;  //in millisSinceEpoch
   final String title;
 
@@ -17,7 +18,7 @@ class Event {
   int isExpanded;
   final String personId;
 
-  Event(this.dateInMilli, this.title, [this.description='', this.eventTypeStrId = '', 
+  Event(this.id, this.dateInMilli, this.title, [this.description='', this.eventTypeStrId = '', 
       this.recurring = 0, this.isExpanded = 0, this.personId]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);

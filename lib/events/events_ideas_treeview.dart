@@ -92,7 +92,7 @@ class EventIdeasTreeWidget extends StatelessWidget {
               : Padding(
                   padding: EdgeInsets.all(20.0),
                   child:Center(
-                      child: Text("None addded. Click the Plus sign in the bottom right to add an Idea.")
+                      child: Text("None addded. Click the Plus sign in the bottom right to add Events and Ideas.")
                   )
                 );
         },
