@@ -12,12 +12,12 @@ class Event {
   final String title;
 
   final String description;
-  final int eventTypeId;
+  final String eventTypeStrId;
   final int recurring; //false = 0
   int isExpanded;
   final String personId;
 
-  Event(this.dateInMilli, this.title, [this.description='', this.eventTypeId = 0, 
+  Event(this.dateInMilli, this.title, [this.description='', this.eventTypeStrId = '', 
       this.recurring = 0, this.isExpanded = 0, this.personId]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);

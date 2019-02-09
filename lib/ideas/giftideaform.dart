@@ -159,7 +159,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
               if(val == ''){
                 return 'Please select a Person';
               }
-              if (val == emptyPeopleMessage){
+              if (val == emptyPeopleMessage || val ==null){
                 return 'Please create a Person first';
               }
             },

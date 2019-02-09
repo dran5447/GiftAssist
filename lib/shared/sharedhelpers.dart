@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import '../model/idea.dart';
 import '../model/event.dart';
 import '../model/person.dart';
 import '../ideas/addgiftideapage.dart';
@@ -15,6 +14,22 @@ class Helpers{
   static Color complement = Color.fromARGB(255, 43, 25, 61);
   static Color neutralDark = Color.fromARGB(255, 56, 63, 81);
   static Color neutralLight = Color.fromARGB(255, 196, 125, 135);
+
+  static final Map<String,IconData> IconStringMap  = 
+  {
+    'Birthday' : Icons.cake,
+    'Graduation' : Icons.school,
+    'Winter Holiday' : Icons.ac_unit,
+    'Housewarming' : Icons.home,
+    'Baby Shower' : Icons.child_friendly,
+    'Valentines' : Icons.favorite_border,
+    'Party' : Icons.people,
+    'Food' : Icons.restaurant,
+    'Promotion' : Icons.work,
+    'Wedding' : Icons.all_inclusive,
+    'Anniversary' : Icons.favorite,
+    'Other' : Icons.card_giftcard
+  };
 
   static DateTime getEventDateTime(Event e){
     DateTime date = new DateTime.fromMillisecondsSinceEpoch(e.dateInMilli);

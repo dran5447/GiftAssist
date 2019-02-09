@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../shared/datastore.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import '../shared/sharedhelpers.dart';
 
 class EventForm extends StatefulWidget {
   final Person person;
@@ -28,11 +29,10 @@ class EventFormState extends State<EventForm>{
   TextEditingController descFieldController = new TextEditingController();
   Person selectedPerson;
   DateTime selectedDateTime;
+  String selectedEventType;
   bool recurringBool = false;
   List<Person> people = new List<Person>();
-
-    ///TODO date, eventtype, bool recurring
-    
+  List<String> eventTypeOptions = new List<String>();
 
   getPeople() async{
     var peeps = await DBProvider.db.getAllPeople();
@@ -51,6 +51,16 @@ class EventFormState extends State<EventForm>{
       if(this.selectedPerson == null && peeps.length > 0){
         selectedPerson = peeps[0];
       }
+    });
+  }
+
+  getEventTypes() {
+    var eventTypes = Helpers.IconStringMap.keys.toList();
+
+    selectedEventType = eventTypes.first;
+    
+    setState(() {
+      eventTypeOptions = eventTypes;
     });
   }
   
@@ -79,6 +89,7 @@ class EventFormState extends State<EventForm>{
   @override
   void initState() {
     this.getPeople();
+    this.getEventTypes();
     super.initState();
   }
 
@@ -110,7 +121,7 @@ class EventFormState extends State<EventForm>{
         children: <Widget>[
           //TODO optional picture for idea
 
-          //Name
+          //Name field
           TextFormField(
             controller: titleFieldController,
             decoration: const InputDecoration(
@@ -201,6 +212,50 @@ class EventFormState extends State<EventForm>{
               }
             },
           ),
+          //EventType field
+          new FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.party_mode),
+                  labelText: 'Event Type *',
+                  errorText: state.hasError ? state.errorText : null,
+                ),
+                isEmpty: selectedEventType == null,
+                child: new DropdownButtonHideUnderline(
+                  child: new DropdownButton<String>(
+                    value: selectedEventType!= null ? selectedEventType : "No EventTypes Available",
+                    isDense: true,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        selectedEventType = newValue;
+                        state.didChange(newValue);
+                      });
+                    },
+                    items: eventTypeOptions.length>0 ? 
+                              eventTypeOptions.map((String e) {
+                                return new DropdownMenuItem<String>(
+                                  value: e,
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new Icon(Helpers.IconStringMap[e]),
+                                      new Padding(padding: EdgeInsets.only(left: 15), child: new Text(e))
+                                    ],
+                                  )
+                                );
+                              }).toList() : 
+                              ["No EventTypes Available"].map((String s) {
+                                return new DropdownMenuItem<String>(
+                                  value: s,
+                                  child: new Text(s),
+                                );
+                              }).toList(),
+                  ),
+                ),
+              );
+            },
+            validator: (val) { },
+          ),
           //Description
           TextFormField(
             controller: descFieldController,
@@ -290,10 +345,7 @@ class EventFormState extends State<EventForm>{
                     var desc = descFieldController.text; 
                     var recurring = recurringBool ? 1 : 0; //true = 1, false = 0
 
-                    var eventType = 0; //TODO
-                    
-
-                    Event e = new Event(date, title, desc, eventType, recurring, 0, selectedPerson.id);
+                    Event e = new Event(date, title, desc, selectedEventType, recurring, 0, selectedPerson.id);
 
                     //Save event
                     DBProvider.db.saveEvent(e);
