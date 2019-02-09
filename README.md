@@ -4,8 +4,7 @@ Flutter project for tracking gift ideas
 
 ## Known bugs
 
-- Events on home page are not sorted by date 
-- Events on home page are sum of all events; clip to a defined chunk of time (within 30 days)
+- Generic event names on home page are unclear who they belong to -add the Person name
 - After save idea/event, make sure to close the FAB dial so it reloads properly
 
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../model/idea.dart';
-import '../model/person.dart';
 
 
 class UncategorizedIdeasList extends StatelessWidget {

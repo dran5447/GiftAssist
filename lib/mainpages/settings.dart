@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../shared/sharedhelpers.dart';
 import '../shared/floatingAdd.dart';
 
 class SettingsWidget extends StatefulWidget {

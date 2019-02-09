@@ -55,7 +55,7 @@ class EventFormState extends State<EventForm>{
   }
 
   getEventTypes() {
-    var eventTypes = Helpers.IconStringMap.keys.toList();
+    var eventTypes = Helpers.iconStringMap.keys.toList();
 
     selectedEventType = eventTypes.first;
     
@@ -238,7 +238,7 @@ class EventFormState extends State<EventForm>{
                                   value: e,
                                   child: new Row(
                                     children: <Widget>[
-                                      new Icon(Helpers.IconStringMap[e]),
+                                      new Icon(Helpers.iconStringMap[e]),
                                       new Padding(padding: EdgeInsets.only(left: 15), child: new Text(e))
                                     ],
                                   )

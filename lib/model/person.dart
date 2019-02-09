@@ -1,6 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'idea.dart';
-import 'event.dart';
 
 part 'person.g.dart';
 

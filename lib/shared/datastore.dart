@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -141,6 +139,20 @@ class DBProvider {
   getAllEvents() async{
     final db = await database;
     var res = await db.query("Event");
+    List<Event> list =
+        res.isNotEmpty ? res.map<Event>((c) => Event.fromJson(c)).toList() : [];
+    return list;
+  }
+
+  getUpcomingEventsWithinXDays(int daysRange) async {
+    var now = DateTime.now();
+    var futureDate = now.add(new Duration(days: daysRange));
+    var nowMS = now.millisecondsSinceEpoch;    
+    var futureDateMS = futureDate.millisecondsSinceEpoch;
+    
+    final db = await database;
+    var res = await db.query("Event", where: "dateInMilli > ? AND dateInMilli < ?", 
+                            whereArgs: [nowMS, futureDateMS], orderBy: "dateInMilli");
     List<Event> list =
         res.isNotEmpty ? res.map<Event>((c) => Event.fromJson(c)).toList() : [];
     return list;

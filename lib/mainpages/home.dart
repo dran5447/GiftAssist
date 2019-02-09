@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/event.dart';
-import '../shared/sharedhelpers.dart';
 import 'dart:math';
+import 'package:uuid/uuid.dart';
 import '../shared/floatingAdd.dart';
 import '../events/eventSummaryCard.dart';
 import '../shared/datastore.dart';
@@ -13,15 +13,33 @@ class HomeWidget extends StatefulWidget {
   HomeState createState() => HomeState();
 }
 
+
+
 class HomeState extends State<HomeWidget>{
   static Random random = new Random();
+  final uuid = new Uuid();
 
   HomeState({Key key});
 
-  //TODO get a limited number of upcoming global events
+  //Get a limited number of events to show on the home page
   Future<List<Event>> getEvents() async{
-    var result = await DBProvider.db.getAllEvents();
+    var result = await DBProvider.db.getUpcomingEventsWithinXDays(30);
     return result;
+  }
+
+  void updateRecurringEventDates() {
+    //TODO log 'saved preference' with last launch date, and use that to update the year of recurring events if they've passed
+  }
+
+  void updateLastCheckin(){
+    //TODO log 'saved preference' with todays launch date, to use as reference to update events next launch
+  }
+  
+  @override
+  void initState() {
+    this.updateLastCheckin();
+    this.updateRecurringEventDates();
+    super.initState();
   }
 
   @override 
@@ -54,7 +72,7 @@ class HomeState extends State<HomeWidget>{
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, j) {
                             return new Dismissible(
-                              key: new Key(Helpers.generateUUID()),
+                              key: new Key(uuid.v1()),
                               direction: DismissDirection.endToStart,
                               background: Container(
                                 color: Colors.green.shade300, 

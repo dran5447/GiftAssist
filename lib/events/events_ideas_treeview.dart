@@ -65,12 +65,12 @@ class EventIdeasTreeWidget extends StatelessWidget {
                         //                   style: Theme.of(context).textTheme.body1,
                         //               ),
                         //             ),
-                        //             //TODO indicators or actions
+                        //             // indicators or actions
                         //           ],
                         //         ),
                         //       ),
                         //       onTap: () {
-                        //         //TODO do something meaningful with tapped idea
+                        //         // do something meaningful with tapped idea
                         //         showDialog(
                         //           context: context,
                         //           builder: (context){
@@ -131,12 +131,12 @@ class EventIdeasTreeWidget extends StatelessWidget {
             //                   style: Theme.of(context).textTheme.body1,
             //               ),
             //             ),
-            //             //TODO indicators or actions
+            //             // indicators or actions
             //           ],
             //         ),
             //       ),
             //       onTap: () {
-            //         //TODO do something meaningful with tapped idea
+            //         // do something meaningful with tapped idea
             //         showDialog(
             //           context: context,
             //           builder: (context){

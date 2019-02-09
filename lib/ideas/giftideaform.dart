@@ -129,7 +129,6 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
                 var httpPrefixRegex = new RegExp('^http(s)?\\:\\/\\/(www\\.)?([^\\ ]*)\$');
                 var wwwPrefixRegex = new RegExp('^www\\.([^\\ ]*)\$');
                 //Accept formats of type http:// , https:// , and www. 
-                //TODO consider appending http:// for data persistance
                 if(!value.startsWith(httpPrefixRegex)) {
                   if(!value.startsWith(wwwPrefixRegex)){
                     return 'Invalid format.';

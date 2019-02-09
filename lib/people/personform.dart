@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import '../shared/datastore.dart';
 import '../model/person.dart';
@@ -55,7 +54,7 @@ class PersonFormState extends State<PersonForm>{
               }
             },
           ),
-          //TODO dropdown stuff for adding events and ideas
+          //TODO dropdown stuff for quick-adding events and ideas
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -105,7 +104,7 @@ class PersonFormState extends State<PersonForm>{
                 onPressed: () {
                   if(_formKey.currentState.validate()){
                     //Send to DataStore for encoding
-                    var newPerson = new Person(uuid.v1(), nameFieldController.text); //TODO add other stuff later
+                    var newPerson = new Person(uuid.v1(), nameFieldController.text);
 
                     savePerson(newPerson).then((int status){
                         //Navigate back with message to display status

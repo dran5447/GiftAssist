@@ -15,7 +15,7 @@ class Helpers{
   static Color neutralDark = Color.fromARGB(255, 56, 63, 81);
   static Color neutralLight = Color.fromARGB(255, 196, 125, 135);
 
-  static final Map<String,IconData> IconStringMap  = 
+  static final Map<String,IconData> iconStringMap  = 
   {
     'Birthday' : Icons.cake,
     'Graduation' : Icons.school,
@@ -120,33 +120,6 @@ class Helpers{
       Scaffold.of(context).showSnackBar(SnackBar(content: Text("$result")));
     }
     
-  }
-
-
-  static List<Event> filterPastEvents(List<Event> events){
-    List<Event> updated = new List<Event>();
-
-    for(Event e in events){
-      var eDate = getEventDateTime(e);
-      if(eDate.difference(DateTime.now()).inDays >= 0){
-        updated.add(e);
-      }
-      else if(e.recurring == 1){
-        //TODO add logic for recurring events
-      }
-    }
-    return updated;
-  }
-
-  static List<Event> sortEvents(List<Event> events){
-    //TODO event sorting
-    // var previous = null;
-    // for(int i=1; i<events.length; i++){
-
-    //   if(previous != null){
-
-    //   }
-    // }
   }
 
   static String getInitials(String name){
