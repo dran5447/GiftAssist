@@ -4,6 +4,8 @@ Flutter project for tracking gift ideas
 
 ## Known bugs
 
+- Events on home page are not sorted by date 
+- Events on home page are sum of all events; clip to a defined chunk of time (within 30 days)
 - After save idea/event, make sure to close the FAB dial so it reloads properly
 
 
@@ -17,6 +19,7 @@ Flutter project for tracking gift ideas
 - Edit and delete for people
 - Ability to move an idea from one event to another
 - Ability to add idea to more than one event
+- Ability to customize date range for home 'upcoming events'
 
 
 V2
