@@ -443,10 +443,10 @@
       "name": "gift_assist",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.6"
     }
   ],
-  "generated": "2020-11-07T06:02:01.561212Z",
+  "generated": "2020-11-07T08:19:34.696698Z",
   "generator": "pub",
   "generatorVersion": "2.10.3"
 }

@@ -7,39 +7,55 @@ class UncategorizedIdeasList extends StatelessWidget {
 
   UncategorizedIdeasList({Key key, this.ideas}) : super(key: key);
 
+  ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
+    title: Text(title,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+        )),
+    subtitle: Text(subtitle),
+    leading: Icon(
+      icon,
+      color: Colors.blue[500],
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
-    
-    return GridView.builder(
-              itemCount: ideas.length,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return new GestureDetector(
-                  child: new Card(
-                    elevation: 5.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).unselectedWidgetColor,
-                            child: Text(ideas[index].title),
-                            minRadius: 60,
-                          ),
-                        ),
-              ],
-            ),
-          ),
-          onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => PersonPage(personName: people[index].name,)),
-            // );
-          },
-        );
-      },
-    );
 
+    return ListView.builder(
+        itemCount: ideas.length,
+        itemBuilder: (context, index) {
+          return Container(
+            color: (index % 2 == 0) ? Colors.grey.shade200 : Colors.white10,
+            child: ListTile(
+                isThreeLine: true,
+                title: Text(ideas[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    )),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Description: " + ideas[index].description, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                    if (ideas[index].website != "")
+                      Text("Website: " + ideas[index].website, maxLines: 1, overflow: TextOverflow.clip, softWrap: false,),
+                  ],
+                ),
+                trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  print('test');
+                  showDialog(
+                    context: context,
+                      builder: (context){
+                        return AlertDialog(
+                          title: Text('TODO show item details page w updating options'),
+                        );
+                      });
+                },
+            )
+          );}
+    );
   }
 }
