@@ -23,7 +23,7 @@ class HomeState extends State<HomeWidget>{
 
   //Get a limited number of events to show on the home page
   Future<List<Event>> getEvents() async{
-    var result = await DBProvider.db.getUpcomingEventsWithinXDays(30);
+    var result = await DBProvider.db.getUpcomingEventsWithinXDays(366);
     return result;
   }
 

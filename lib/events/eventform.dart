@@ -119,21 +119,59 @@ class EventFormState extends State<EventForm>{
       autovalidate: autovalidate,
       child: Column(
         children: <Widget>[
-          //TODO optional picture for idea
-
+          //EventType field
+          new FormField<String>(
+            builder: (FormFieldState<String> state) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.party_mode),
+                  labelText: 'Event Type *',
+                  errorText: state.hasError ? state.errorText : null,
+                ),
+                isEmpty: selectedEventType == null,
+                child: new DropdownButtonHideUnderline(
+                  child: new DropdownButton<String>(
+                    value: selectedEventType!= null ? selectedEventType : "No EventTypes Available",
+                    isDense: true,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        selectedEventType = newValue;
+                        state.didChange(newValue);
+                      });
+                    },
+                    items: eventTypeOptions.length>0 ?
+                    eventTypeOptions.map((String e) {
+                      return new DropdownMenuItem<String>(
+                          value: e,
+                          child: new Row(
+                            children: <Widget>[
+                              new Icon(Helpers.iconStringMap[e]),
+                              new Padding(padding: EdgeInsets.only(left: 15), child: new Text(e))
+                            ],
+                          )
+                      );
+                    }).toList() :
+                    ["No EventTypes Available"].map((String s) {
+                      return new DropdownMenuItem<String>(
+                        value: s,
+                        child: new Text(s),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
+            validator: (val) { },
+          ),
           //Name field
           TextFormField(
             controller: titleFieldController,
             decoration: const InputDecoration(
               icon: Icon(Icons.card_giftcard),
               hintText: 'Event name',
-              labelText: 'Title *',
+              labelText: 'Optional Title',
             ),
-            validator:  (value){
-              if(value.isEmpty){
-                return 'Please enter a value';
-              }
-            },
+            validator:  (value){ },
           ),
           //Date field
           new Row(children: <Widget>[
@@ -212,50 +250,7 @@ class EventFormState extends State<EventForm>{
               }
             },
           ),
-          //EventType field
-          new FormField<String>(
-            builder: (FormFieldState<String> state) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.party_mode),
-                  labelText: 'Event Type *',
-                  errorText: state.hasError ? state.errorText : null,
-                ),
-                isEmpty: selectedEventType == null,
-                child: new DropdownButtonHideUnderline(
-                  child: new DropdownButton<String>(
-                    value: selectedEventType!= null ? selectedEventType : "No EventTypes Available",
-                    isDense: true,
-                    onChanged: (String newValue) {
-                      setState(() {
-                        selectedEventType = newValue;
-                        state.didChange(newValue);
-                      });
-                    },
-                    items: eventTypeOptions.length>0 ? 
-                              eventTypeOptions.map((String e) {
-                                return new DropdownMenuItem<String>(
-                                  value: e,
-                                  child: new Row(
-                                    children: <Widget>[
-                                      new Icon(Helpers.iconStringMap[e]),
-                                      new Padding(padding: EdgeInsets.only(left: 15), child: new Text(e))
-                                    ],
-                                  )
-                                );
-                              }).toList() : 
-                              ["No EventTypes Available"].map((String s) {
-                                return new DropdownMenuItem<String>(
-                                  value: s,
-                                  child: new Text(s),
-                                );
-                              }).toList(),
-                  ),
-                ),
-              );
-            },
-            validator: (val) { },
-          ),
+
           //Description
           TextFormField(
             controller: descFieldController,
@@ -341,7 +336,7 @@ class EventFormState extends State<EventForm>{
 
                   if(_formKey.currentState.validate()){
                     var date = selectedDateTime.millisecondsSinceEpoch;
-                    var title = titleFieldController.text;
+                    var title = titleFieldController.text != "" ? titleFieldController.text : selectedEventType;
                     var desc = descFieldController.text; 
                     var recurring = recurringBool ? 1 : 0; //true = 1, false = 0
 

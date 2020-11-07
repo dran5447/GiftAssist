@@ -112,7 +112,7 @@ class DBProvider {
 
   getIdeasForPerson(Person p) async{
     final db = await database;
-    var res =await  db.query("Idea", where: "uncategorizedPersonId = ?", whereArgs: [p.id]);
+    var res = await  db.query("Idea", where: "uncategorizedPersonId = ?", whereArgs: [p.id]);
     List<Idea> list =
         res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
     return list;

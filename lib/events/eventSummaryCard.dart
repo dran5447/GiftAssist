@@ -19,7 +19,13 @@ class EventSummaryCard extends StatelessWidget {
             contentPadding: EdgeInsets.all(20.0),
             leading: Icon(Helpers.iconStringMap[event.eventTypeStrId], size:50.0),
             title: Text(event.title),
-            subtitle: Text(Helpers.formatDate(Helpers.getEventDateTime(event))),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(Helpers.formatDate(Helpers.getEventDateTime(event))),
+                Text(event.personId),
+              ],
+            ),
             trailing: EventStatusSnippet(event),
             onTap: (){
               Navigator.push(
