@@ -123,24 +123,6 @@ class HomeState extends State<HomeWidget>{
                             );
                           }
                         )
-                    // ?  ListView.builder(
-                    //       itemCount: snapshot.data.length,
-                    //       itemBuilder: (context, index) {
-                    //         var item = snapshot.data[index];
-                    //         return new ExpansionTile(
-                    //           initiallyExpanded: item.isExpanded==1,
-                    //           key: PageStorageKey<Event>(item),
-                    //           leading: Text(
-                    //             item.title,
-                    //             style: Theme.of(context).textTheme.title,
-                    //           ),
-                    //           title: Text(
-                    //             '(' + Helpers.formatDate(Helpers.getEventDateTime(item)) + ')',
-                    //             style: Theme.of(context).textTheme.subtitle,
-                    //           ),
-                    //         );          
-                    //       },
-                    //     )
                     : Padding(
                         padding: EdgeInsets.all(20.0),
                         child:Center(

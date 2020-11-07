@@ -24,6 +24,7 @@ class UncategorizedIdeasList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ListView.builder(
+        shrinkWrap: true,
         itemCount: ideas.length,
         itemBuilder: (context, index) {
           return Container(

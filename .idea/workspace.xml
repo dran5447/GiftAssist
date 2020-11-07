@@ -22,8 +22,9 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/events/eventSummaryCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/events/eventSummaryCard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/events/eventform.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/events/eventform.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/events/eventdetailspage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/events/eventdetailspage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ideas/giftideaform.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ideas/giftideaform.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ideas/ideaslist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ideas/ideaslist.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/mainpages/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mainpages/home.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/shared/datastore.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/shared/datastore.dart" afterDir="false" />
     </list>
@@ -97,22 +98,22 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="101" y="329" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1604738323280" />
-    <state width="931" height="216" key="GridCell.Tab.0.bottom" timestamp="1604738429858">
+    <state width="988" height="270" key="GridCell.Tab.0.bottom" timestamp="1604787074933">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="931" height="216" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1604738429858" />
-    <state width="931" height="216" key="GridCell.Tab.0.center" timestamp="1604738429858">
+    <state width="988" height="270" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1604787074933" />
+    <state width="988" height="270" key="GridCell.Tab.0.center" timestamp="1604787074933">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="931" height="216" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1604738429858" />
-    <state width="931" height="216" key="GridCell.Tab.0.left" timestamp="1604738429858">
+    <state width="988" height="270" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1604787074933" />
+    <state width="988" height="270" key="GridCell.Tab.0.left" timestamp="1604787074933">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="931" height="216" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1604738429858" />
-    <state width="931" height="216" key="GridCell.Tab.0.right" timestamp="1604738429858">
+    <state width="988" height="270" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1604787074933" />
+    <state width="988" height="270" key="GridCell.Tab.0.right" timestamp="1604787074933">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="931" height="216" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1604738429858" />
+    <state width="988" height="270" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1604787074933" />
     <state x="492" y="176" key="SettingsEditor" timestamp="1604728791686">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -121,10 +122,10 @@
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="483" y="455" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1604729808494" />
-    <state x="380" y="141" width="587" height="801" key="find.popup" timestamp="1604783991574">
+    <state x="80" y="144" width="587" height="801" key="find.popup" timestamp="1604787507615">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="380" y="141" width="587" height="801" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1604783991574" />
+    <state x="80" y="144" width="587" height="801" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1604787507615" />
     <state x="336" y="260" width="672" height="678" key="search.everywhere.popup" timestamp="1604731437375">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>

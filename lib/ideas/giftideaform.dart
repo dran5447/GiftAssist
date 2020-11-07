@@ -315,7 +315,7 @@ class GiftIdeaFormState extends State<GiftIdeaForm>{
 
                     Idea i;
                     if(selectedEvent != null){
-                      i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedEvent.id);
+                      i = new Idea(uuid.v1(), title, desc, site, 0, selectedEvent.id, selectedPerson.id);
                     } else{  //save as an uncategorized idea for the selected person
                       i = new Idea(uuid.v1(), title, desc, site, 0, null, selectedPerson.id);
                     }

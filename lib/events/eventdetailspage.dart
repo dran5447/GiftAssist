@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gift_assist/ideas/ideaslist.dart';
+import 'package:gift_assist/model/idea.dart';
+import 'package:gift_assist/shared/datastore.dart';
+import 'package:gift_assist/shared/sharedhelpers.dart';
 import '../model/event.dart';
 
 class EventDetailPage extends StatefulWidget {
@@ -15,28 +19,65 @@ class _EventDetailState extends State<EventDetailPage> {
   
   _EventDetailState({Key key, this.event});
 
+  Future<List<Idea>> getIdeas() async{
+    var result = await DBProvider.db.getIdeasForEvent(event);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.title),
+       //   leading:
+          title: Row(
+            children: [
+              Icon(Helpers.iconStringMap[event.eventTypeStrId], size:30.0),
+              new Padding(padding: EdgeInsets.only(left: 15), child: Text(event.title))
+            ],
+          ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20),
-            child: Row(
-              children: <Widget>[
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Date: " + Helpers.formatDate(Helpers.getEventDateTime(event))),
+                if (event.description != "")
+                  Text("Description: " + event.description),
                 Padding(
-                  padding: EdgeInsets.only(right: 30.0),
-                  child: Text('TODO add event details here'),
+                  padding: EdgeInsets.only(top: 20, bottom: 10.0),
+                  child: Text(
+                    'Ideas',
+                    style: Theme.of(context).textTheme.title,
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              ],
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: FutureBuilder<List<Idea>>(
+                      future: getIdeas(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) print(snapshot.error);
+                        return snapshot.hasData && snapshot.data.length > 0
+                            ? UncategorizedIdeasList(ideas: snapshot.data)
+                            : Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child:Center(
+                                child: Text("None added yet")
+                              )
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ), //padding: EdgeInsets.only(right: 30.0)
             ),
-          ),
-        ]
-      ),
-    );
+          ],
+        ),
+      );
   }
 }

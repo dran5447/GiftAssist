@@ -107,6 +107,7 @@ class DBProvider {
   saveIdea(Idea idea) async{
     final db = await database;
     var res = await db.insert("Idea", idea.toJson());
+    print(idea.eventId);
     return res;
   }
 
@@ -115,6 +116,17 @@ class DBProvider {
     var res = await  db.query("Idea", where: "uncategorizedPersonId = ?", whereArgs: [p.id]);
     List<Idea> list =
         res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
+    return list;
+  }
+
+  getIdeasForEvent(Event e) async{
+    final db = await database;
+    var res = await  db.query("Idea", where: "eventId = ?", whereArgs: [e.id]);
+    print(res);
+    var res2 = await  db.query("Idea");
+    print(res2);
+    List<Idea> list =
+    res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
     return list;
   }
 
