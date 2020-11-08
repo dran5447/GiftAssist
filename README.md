@@ -8,7 +8,15 @@ Clone and follow instructions for getting a Flutter project working here - https
 
 ## TODOs
 
+- [ ] Enum for idea status (created, purchased, arrived, archived)
+- [ ] Optional cost field for ideas, so we can get an estimated total spent per event -> possible budgeting
+- [ ] Edit and delete for ideas
+- [ ] Edit and delete for events -> option to keep ideas around or delete
+- [ ] Edit and delete for people
+- [ ] 'Uncategorized' default idea option (otherwise now when you create an event you cant have unassoc ideas)
+- [ ] Ability to map one idea to many events
 - [ ] Generic event names on home page are unclear who they belong to -add the Person name
+
 - [x] Ideas arent getting tied to events / person correctly now?
 - [ ] Person creation should have option to add events, picture
 - [ ] Initial launch should have better intro popup (but once this is done, dont show in debug mode to save sanity)
@@ -18,11 +26,7 @@ Clone and follow instructions for getting a Flutter project working here - https
 - [ ] Should be able to add more than one website for an idea
 - [ ] Does yearly recurr actually work yet?
 - [ ] Events page on a profile needs work - list of events -> click one -> details page, and summary of ideas
-- [ ] Edit and delete for ideas
-- [ ] Edit and delete for events
-- [ ] Edit and delete for people
 - [ ] Ability to move an idea from one event to another
-- [ ] Ability to add idea to more than one event
 - [ ] Ability to customize date range for home 'upcoming events' (drop down and cache the setting)
 
 Lower pri
