@@ -2,6 +2,8 @@
 
 Flutter project for tracking gift ideas
 
+![Android-Emulator-Pixel-4-API-30.gif](Android-Emulator-Pixel-4-API-30.gif)
+
 ## Running
 
 Clone and follow instructions for getting a Flutter project working here - https://flutter.dev/docs/get-started/install
