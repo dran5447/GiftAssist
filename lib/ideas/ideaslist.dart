@@ -32,7 +32,8 @@ class UncategorizedIdeasList extends StatelessWidget {
               elevation: 3.0,
             child: ListTile(
               tileColor: Colors.white,
-                isThreeLine: !isCompact ? true : false,
+                isThreeLine: !isCompact && (ideas[index].description != "") && (ideas[index].website != "") ? true : false,
+                dense: isCompact? true : false,
                 title: Text(ideas[index].title,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
@@ -41,7 +42,8 @@ class UncategorizedIdeasList extends StatelessWidget {
                 subtitle: !isCompact ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Description: " + ideas[index].description, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                    if (ideas[index].description != "")
+                      Text("Description: " + ideas[index].description, maxLines: 1, overflow: TextOverflow.ellipsis,),
                     if (ideas[index].website != "")
                       Text("Website: " + ideas[index].website, maxLines: 1, overflow: TextOverflow.clip, softWrap: false,),
                   ],
