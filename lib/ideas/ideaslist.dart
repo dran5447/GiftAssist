@@ -28,9 +28,10 @@ class UncategorizedIdeasList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: ideas.length,
         itemBuilder: (context, index) {
-          return Container(
-            color: (index % 2 == 0) ? Colors.grey.shade200 : Colors.white10,
+          return Card(
+              elevation: 3.0,
             child: ListTile(
+              tileColor: Colors.white,
                 isThreeLine: !isCompact ? true : false,
                 title: Text(ideas[index].title,
                     style: TextStyle(
