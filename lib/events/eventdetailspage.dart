@@ -50,6 +50,84 @@ class _EventDetailState extends State<EventDetailPage> {
                   Text("Description: " + event.description),
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Text(
+                        'Arrived',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        ' (Ready to gift)',
+                        style: Theme.of(context).textTheme.caption,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: FutureBuilder<List<Idea>>(
+                    future: getIdeas(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) print(snapshot.error);
+                      return snapshot.hasData && snapshot.data.length > 0
+                          ? UncategorizedIdeasList(ideas: snapshot.data, isCompact: true)
+                          : Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child:Center(
+                              child: Text("None added yet")
+                          )
+                      );
+                    },
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    children: [
+                      Text(
+                        'Purchased',
+                        style: TextStyle(
+                          color: Colors.lightBlue,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        ' (Bought, awaiting arrival)',
+                        style: Theme.of(context).textTheme.caption,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: FutureBuilder<List<Idea>>(
+                    future: getIdeas(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) print(snapshot.error);
+                      return snapshot.hasData && snapshot.data.length > 0
+                          ? UncategorizedIdeasList(ideas: snapshot.data)
+                          : Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child:Center(
+                              child: Text("None added yet")
+                          )
+                      );
+                    },
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 10.0),
                   child: Text(
                     'Ideas',
                     style: Theme.of(context).textTheme.title,

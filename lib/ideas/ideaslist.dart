@@ -4,8 +4,9 @@ import '../model/idea.dart';
 
 class UncategorizedIdeasList extends StatelessWidget {
   final List<Idea> ideas;
+  bool isCompact = false;
 
-  UncategorizedIdeasList({Key key, this.ideas}) : super(key: key);
+  UncategorizedIdeasList({Key key, this.ideas, this.isCompact = false}) : super(key: key);
 
   ListTile _tile(String title, String subtitle, IconData icon) => ListTile(
     title: Text(title,
@@ -30,23 +31,22 @@ class UncategorizedIdeasList extends StatelessWidget {
           return Container(
             color: (index % 2 == 0) ? Colors.grey.shade200 : Colors.white10,
             child: ListTile(
-                isThreeLine: true,
+                isThreeLine: !isCompact ? true : false,
                 title: Text(ideas[index].title,
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
                     )),
-                subtitle: Column(
+                subtitle: !isCompact ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text("Description: " + ideas[index].description, maxLines: 1, overflow: TextOverflow.ellipsis,),
                     if (ideas[index].website != "")
                       Text("Website: " + ideas[index].website, maxLines: 1, overflow: TextOverflow.clip, softWrap: false,),
                   ],
-                ),
+                ) : null ,
                 trailing: Icon(Icons.keyboard_arrow_right),
                 onTap: () {
-                  print('test');
                   showDialog(
                     context: context,
                       builder: (context){
