@@ -16,7 +16,7 @@ Clone and follow instructions for getting a Flutter project working here - https
 - [ ] 'Uncategorized' default idea option (otherwise now when you create an event you cant have unassoc ideas)
 - [ ] Ability to map one idea to many events
 - [ ] Generic event names on home page are unclear who they belong to -add the Person name
-
+- [ ] Ideas bulk delete / archive options
 - [x] Ideas arent getting tied to events / person correctly now?
 - [ ] Person creation should have option to add events, picture
 - [ ] Initial launch should have better intro popup (but once this is done, dont show in debug mode to save sanity)
