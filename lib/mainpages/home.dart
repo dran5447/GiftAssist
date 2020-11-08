@@ -75,7 +75,7 @@ class HomeState extends State<HomeWidget>{
                               key: new Key(uuid.v1()),
                               direction: DismissDirection.endToStart,
                               background: Container(
-                                color: Colors.green.shade300, 
+                                color: Colors.green.shade300,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end, 
                                   children: <Widget>[
@@ -85,36 +85,23 @@ class HomeState extends State<HomeWidget>{
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
                                           Icon(Icons.check),
-                                          Text('Mark Done')
+                                          Text('Toggle Complete')
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              onDismissed: (DismissDirection dismissDir){
-                                //TODO handle event data changes
+                              confirmDismiss: (DismissDirection dismissDir) async {
+                                Event tempDismissedEvent = snapshot.data[j];
 
-                                Event tempDismissedEvent =snapshot.data[j];
                                 setState(() {
-                                  snapshot.data.remove(tempDismissedEvent);
+                                  // Push update to event
+                                  tempDismissedEvent.completed = tempDismissedEvent.completed == 0 ? 1 : 0;
+                                  DBProvider.db.updateEvent(tempDismissedEvent);
                                 });
 
-                                //Show Undo snackbar option
-                                Scaffold.of(context).removeCurrentSnackBar();
-                                var snackbar = SnackBar(
-                                  content: Text("Marked as done."),
-                                  action: SnackBarAction(
-                                    textColor: Colors.redAccent,
-                                    label: 'Undo',
-                                    onPressed: () {
-                                        setState(() {
-                                          snapshot.data.insert(j,tempDismissedEvent);
-                                        });
-                                    },
-                                  ),
-                                );
-                                Scaffold.of(context).showSnackBar(snackbar);
+                                return false;
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 5.0),

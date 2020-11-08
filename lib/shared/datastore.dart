@@ -57,7 +57,8 @@ class DBProvider {
           "eventTypeStrId TEXT,"
           "recurring BIT,"
           "isExpanded BIT,"
-          "personId TEXT"
+          "personId TEXT,"
+          "completed INTEGER"
           ")");
 
       //List tables
@@ -122,9 +123,6 @@ class DBProvider {
   getIdeasForEvent(Event e) async{
     final db = await database;
     var res = await  db.query("Idea", where: "eventId = ?", whereArgs: [e.id]);
-    print(res);
-    var res2 = await  db.query("Idea");
-    print(res2);
     List<Idea> list =
     res.isNotEmpty ? res.map<Idea>((c) => Idea.fromJson(c)).toList() : [];
     return list;
@@ -168,6 +166,12 @@ class DBProvider {
     List<Event> list =
         res.isNotEmpty ? res.map<Event>((c) => Event.fromJson(c)).toList() : [];
     return list;
+  }
+
+  updateEvent(Event e) async {
+    final db = await database;
+    var res = await db.update("Event", e.toMap(),  where: " id = ? ", whereArgs: [e.id]);
+    return res;
   }
   ///END EVENT QUERIES
 }

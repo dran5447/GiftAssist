@@ -15,7 +15,8 @@ Event _$EventFromJson(Map<String, dynamic> json) {
       json['eventTypeStrId'] as String,
       json['recurring'] as int,
       json['isExpanded'] as int,
-      json['personId'] as String);
+      json['personId'] as String,
+      json['completed'] as int);
 }
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
@@ -26,5 +27,6 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'eventTypeStrId': instance.eventTypeStrId,
       'recurring': instance.recurring,
       'isExpanded': instance.isExpanded,
-      'personId': instance.personId
+      'personId': instance.personId,
+  'completed': instance.completed
     };

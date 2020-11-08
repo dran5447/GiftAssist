@@ -9,10 +9,11 @@ Clone and follow instructions for getting a Flutter project working here - https
 ## TODOs
 
 - [ ] Generic event names on home page are unclear who they belong to -add the Person name
-- [ ] Ideas arent getting tied to events / person correctly now?
+- [ X ] Ideas arent getting tied to events / person correctly now?
 - [ ] Person creation should have option to add events, picture
 - [ ] Initial launch should have better intro popup (but once this is done, dont show in debug mode to save sanity)
-- [ ] Event creation should have event type at TOP, and then some events (like vday) shouldnt require a name
+- [ X ] Fix event complete/incomplete toggle on home
+- [ X ] Event creation should have event type at TOP, and then some events (like vday) shouldnt require a name
 - [ ] Certain events should auto-fill date (e.g. xmas, vday)
 - [ ] Should be able to add more than one website for an idea
 - [ ] Does yearly recurr actually work yet?

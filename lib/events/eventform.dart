@@ -340,7 +340,7 @@ class EventFormState extends State<EventForm>{
                     var desc = descFieldController.text; 
                     var recurring = recurringBool ? 1 : 0; //true = 1, false = 0
 
-                    Event e = new Event(uuid.v1(), date, title, desc, selectedEventType, recurring, 0, selectedPerson.id);
+                    Event e = new Event(uuid.v1(), date, title, desc, selectedEventType, recurring, 0, selectedPerson.id, 0);
 
                     //Save event
                     DBProvider.db.saveEvent(e);

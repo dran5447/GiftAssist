@@ -13,26 +13,29 @@ class Event {
   final String description;
   final String eventTypeStrId;
   final int recurring; //false = 0
+  int completed;
   int isExpanded;
   final String personId;
 
   Event(this.id, this.dateInMilli, this.title, [this.description='', this.eventTypeStrId = '', 
-      this.recurring = 0, this.isExpanded = 0, this.personId]);
+      this.recurring = 0, this.isExpanded = 0, this.personId, this.completed=0]);
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
   Map<String, dynamic> toJson() => _$EventToJson(this);
 
-  bool ideasCompleted(){
-  //   if(ideas.length > 0) {
-  //     for(int i=0; i<ideas.length; i++){
-  //       if(!ideas[i].done){
-  //         return false;
-  //       }
-  //     }
-  //     return true;
-  //   }
-    return true;
-   }
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'dateInMilli': dateInMilli,
+      'title': title,
+      'description': description,
+      'eventTypeStrId': eventTypeStrId,
+      'recurring': recurring,
+      'completed': completed,
+      'isExpanded': isExpanded,
+      'personId': personId,
+    };
+  }
 }
 
 class EventDateGroup{
