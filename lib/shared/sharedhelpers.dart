@@ -123,7 +123,7 @@ class Helpers{
   }
 
   static String getInitials(String name){
-    var nameList = name.split(" ");
+    var nameList = name.trim().split(" ");
     String initials = '';
     nameList.forEach(
       (element) => initials+=element.substring(0,1)
